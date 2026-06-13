@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>🔨 Panel Testowy Systemu Aukcyjnego</h2>
+  <hr>
+
+  <h3>Aktywne Aukcje (Pobrane z API)</h3>
+  <button (click)="loadAuctions()" class="btn-refresh">
+    🔄 Odśwież listę
+  </button>
+
+  <div *ngIf="auctions.length === 0" class="no-data">
+    Brak aukcji w bazie lub backend jest wyłączony.
+  </div>
+
+  <div *ngFor="let a of auctions" class="auction-card">
+    <h4>{{ a.title }} <small class="category">({{ a.category }})</small></h4>
+    <p>{{ a.description }}</p>
+    <p><b>Aktualna cena:</b> <span class="price">{{ a.currentPrice }} zł</span></p>
+
+    <div class="bid-panel">
+      <label>Kwota licytacji: </label>
+      <input type="number" [(ngModel)]="bidAmounts[a.id]" class="input-amount">
+      
+      <label>ID usera: </label>
+      <input type="number" [(ngModel)]="bidderId" class="input-id">
+
+      <button (click)="placeBid(a.id)" class="btn-bid">Licytuj</button>
+    </div>
+  </div>
+
+  <div *ngIf="message" class="alert alert-success">{{ message }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+</div>
