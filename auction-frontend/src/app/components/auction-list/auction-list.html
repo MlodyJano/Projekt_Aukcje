@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="header-section">
+    <h2>Aktualne Aukcje</h2>
+    
+    <div class="filter-box">
+      <label for="categoryFilter">Filtruj po kategorii: </label>
+      <select id="categoryFilter" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+        <option value="">Wszystkie kategorie</option>
+        <option value="Elektronika">Elektronika</option>
+        <option value="Moda">Moda</option>
+        <option value="Dom i Ogród">Dom i Ogród</option>
+        <option value="Motoryzacja">Motoryzacja</option>
+        <option value="Książki">Książki</option>
+      </select>
+    </div>
+  </div>
+  
+  <div *ngIf="auctions.length === 0" class="no-auctions">
+    Brak aktywnych aukcji w tej kategorii.
+  </div>
+
+  <div class="auction-grid">
+    <div *ngFor="let auction of auctions" class="auction-card">
+      <h3>{{ auction.title }}</h3>
+      <span class="category-badge">{{ auction.category }}</span>
+      <p class="description">{{ auction.description }}</p>
+      
+      <hr class="separator">
+      
+      <div class="price-section">
+        <p>Cena wywoławcza: <strong>{{ auction.startingPrice }} zł</strong></p>
+        <p class="current-price">Aktualna cena: <strong>{{ auction.currentPrice }} zł</strong></p>
+      </div>
+
+      <button class="bid-button" (click)="onBid(auction.id, auction.currentPrice)">
+        Podbij ofertę (+10 zł)
+      </button>
+
+      <div class="bids-history" *ngIf="auction.bids && auction.bids.length > 0">
+        <h4>Historia licytacji:</h4>
+        <ul>
+          <li *ngFor="let bid of auction.bids">
+            <strong>{{ bid.bidderName }}</strong> zalicytował za <strong>{{ bid.amount }} zł</strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
