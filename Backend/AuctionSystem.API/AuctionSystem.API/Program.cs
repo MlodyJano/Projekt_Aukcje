@@ -16,6 +16,7 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IBidService, BidService>();
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AngularClient", policy =>
@@ -26,14 +27,12 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapibuilder
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseCors("AngularClient");
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -42,18 +41,11 @@ if (app.Environment.IsDevelopment())
         options.WithTitle("System Aukcyjny API")
                .WithTheme(ScalarTheme.Purple); 
     });
-    //app.UseSwagger();
-    //app.UseSwaggerUI(options =>
-    //{
-    //    // Wskazujemy domyślny plik dokumentacji wygenerowany przez .NET 10
-    //    options.SwaggerEndpoint("/openapi/v1.json", "Auction System API v1");
-    //    options.RoutePrefix = "swagger"; // Interfejs będzie dostępny pod adresem /swagger
-    //});
-
-
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AngularClient");
 
 app.UseAuthorization();
 

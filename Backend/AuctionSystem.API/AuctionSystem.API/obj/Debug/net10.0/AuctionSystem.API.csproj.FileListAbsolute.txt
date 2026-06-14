@@ -152,3 +152,6 @@ C:\Users\Jano\Desktop\studia\Projekt\Backend\AuctionSystem.API\AuctionSystem.API
 C:\Users\Jano\Desktop\studia\Projekt\Backend\AuctionSystem.API\AuctionSystem.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Jano\Desktop\studia\Projekt\Backend\AuctionSystem.API\AuctionSystem.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Jano\Desktop\studia\Projekt\Backend\AuctionSystem.API\AuctionSystem.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+F:\Programowanie\Angular\Backend\AuctionSystem.API\AuctionSystem.API\obj\Debug\net10.0\AuctionSystem.API.dll
+F:\Programowanie\Angular\Backend\AuctionSystem.API\AuctionSystem.API\obj\Debug\net10.0\refint\AuctionSystem.API.dll
+F:\Programowanie\Angular\Backend\AuctionSystem.API\AuctionSystem.API\obj\Debug\net10.0\AuctionSystem.API.pdb

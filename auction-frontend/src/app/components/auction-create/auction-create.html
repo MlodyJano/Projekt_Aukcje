@@ -1,0 +1,42 @@
+<div class="form-container">
+  <h2>Wystaw nowy przedmiot na aukcję</h2>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Tytuł przedmiotu:</label>
+      <input type="text" id="title" name="title" [(ngModel)]="newAuction.title" required />
+    </div>
+
+    <div class="form-group">
+      <label for="category">Kategoria:</label>
+      <select id="category" name="category" [(ngModel)]="newAuction.category" required>
+        <option value="" disabled selected>Wybierz kategorię</option>
+        <option value="Elektronika">Elektronika</option>
+        <option value="Moda">Moda</option>
+        <option value="Dom i Ogród">Dom i Ogród</option>
+        <option value="Motoryzacja">Motoryzacja</option>
+        <option value="Książki">Książki</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Opis:</label>
+      <textarea id="description" name="description" [(ngModel)]="newAuction.description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="startingPrice">Cena wywoławcza (zł):</label>
+      <input type="number" id="startingPrice" name="startingPrice" [(ngModel)]="newAuction.startingPrice" min="1" required />
+    </div>
+
+    <div class="form-group">
+      <label for="endTime">Data i godzina zakończenia:</label>
+      <input type="datetime-local" id="endTime" name="endTime" [(ngModel)]="newAuction.endTime" required />
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn-submit">Wystaw aukcję</button>
+      <button type="button" class="btn-cancel" routerLink="/auctions">Anuluj</button>
+    </div>
+  </form>
+</div>
