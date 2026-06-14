@@ -1,0 +1,57 @@
+## Visual Studio Build Outputs
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Log[s]]/
+
+## .NET Core / .NET User Secrets
+# Jeśli używasz User Secrets do przechowywania haseł lokalnie
+secrets.json
+.microsoft.dotnet.secretmanager/
+
+## Rider & JetBrains
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## Visual Studio Temporary Files and Formats
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+
+## Publish Output
+# Ignoruje foldery, do których publikujesz aplikację gotową do wdrożenia
+publish/
+*.[Pp]ublish.xml
+*.azurepubxml
+
+## EF Core Migrations Bundle
+efbundle
+efbundle.exe
+
+## Log files
+*.log
+*.log.*
+
+## OS Files
+.DS_Store
+Thumbs.db
+
+## Local Environment Settings
+# Ignoruje pliki z lokalnymi sekretami i konfiguracją baz danych
+appsettings.Development.json
+appsettings.Local.json
+.env
