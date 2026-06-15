@@ -41,11 +41,11 @@ namespace AuctionSystem.API.Services
 
         public async Task<UserDto?> RegisterUserAsync(UserRegisterDto registerDto)
         {
-            // Walidacja biznesowa: Sprawdzenie czy nazwa użytkownika jest zajęta
-            var existingUser = await _userRepository.GetUserByUsernameAsync(registerDto.Username);
-            if (existingUser != null) return null; // Logika kontrolera zwróci np. Bad请求 (400)
+            var allUsers = await _userRepository.GetAllUsersAsync();
+            var userExists = allUsers.Any(u => u.Username.Trim().Equals(registerDto.Username.Trim(), StringComparison.OrdinalIgnoreCase));
+            
+            if (userExists) return null;
 
-            // Hashowanie hasła przy użyciu BCrypt
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
 
             var newUser = new User
@@ -87,6 +87,35 @@ namespace AuctionSystem.API.Services
 
             await _userRepository.DeleteUserAsync(user);
             return await _userRepository.SaveChangesAsync();
+        }
+
+        // METODA LOGOWANIA Z POPRAWIONYM TYPEM LOGIN-DTO
+        public async Task<UserDto?> AuthenticateAsync(LoginDto loginDto)
+        {
+            var allUsers = await _userRepository.GetAllUsersAsync();
+            if (allUsers == null) return null;
+
+            var user = allUsers.FirstOrDefault(u => 
+                u.Username.Trim().Equals(loginDto.Username.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (user == null || string.IsNullOrEmpty(user.PasswordHash))
+            {
+                return null;
+            }
+
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash);
+            if (!isPasswordValid)
+            {
+                return null;
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                CreatedAt = user.CreatedAt
+            };
         }
     }
 }

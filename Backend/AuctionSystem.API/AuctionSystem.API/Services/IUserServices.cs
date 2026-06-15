@@ -1,4 +1,5 @@
 ﻿using AuctionSystem.API.DTOs;
+using AuctionSystem.API.Models;
 
 namespace AuctionSystem.API.Services
 {
@@ -9,5 +10,8 @@ namespace AuctionSystem.API.Services
         Task<UserDto?> RegisterUserAsync(UserRegisterDto registerDto);
         Task<bool> UpdateUserAsync(int id, UserRegisterDto updateDto);
         Task<bool> DeleteUserAsync(int id);
+        
+        // Ta linijka musi idealnie pasować do UserService.cs:
+        Task<UserDto?> AuthenticateAsync(LoginDto loginDto);
     }
 }
