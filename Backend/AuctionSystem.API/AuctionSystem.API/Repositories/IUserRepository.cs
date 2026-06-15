@@ -1,4 +1,5 @@
 ﻿using AuctionSystem.API.Models;
+using AuctionSystem.API.DTOs;
 
 namespace AuctionSystem.API.Repositories
 {

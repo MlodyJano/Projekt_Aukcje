@@ -6,9 +6,11 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 1. Konfiguracja bazy danych SQLite
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite("Data Source=auctions.db"));
 
+// 2. Rejestracja warstwy repozytoriów i serwisów (Dependency Injection)
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
@@ -16,44 +18,53 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IBidService, BidService>();
 
+// 3. Konfiguracja polityki CORS dla Angulara
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AngularClient", policy =>
+    options.AddPolicy("AllowAngular", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") 
+        policy.WithOrigins("http://localhost:4200") // Adres aplikacji Angular
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
-builder.Services.AddControllers();
+// 4. Konfiguracja kontrolerów i formatowania JSON (CamelCase dla Angulara)
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    });
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapibuilder
+// 5. Konfiguracja OpenAPI (Swagger/Scalar)
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseCors("AngularClient");
+
+// Automatyczne tworzenie bazy danych i aplikowanie migracji przy starcie serwera
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DataContext>();
+    context.Database.EnsureCreated(); // To fizycznie utworzy plik auctions.db i tabele!
+}
+
+// 6. Konfiguracja potoku ¿¹dañ HTTP (Middleware)
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference(options =>
     {
         options.WithTitle("System Aukcyjny API")
-               .WithTheme(ScalarTheme.Purple); 
+               .WithTheme(ScalarTheme.Purple);
     });
-    //app.UseSwagger();
-    //app.UseSwaggerUI(options =>
-    //{
-    //    // Wskazujemy domyÅ›lny plik dokumentacji wygenerowany przez .NET 10
-    //    options.SwaggerEndpoint("/openapi/v1.json", "Auction System API v1");
-    //    options.RoutePrefix = "swagger"; // Interfejs bÄ™dzie dostÄ™pny pod adresem /swagger
-    //});
-
-
 }
 
 app.UseHttpsRedirection();
+
+// URUCHOMIENIE CORS (Nazwa zgodna z zarejestrowan¹ polityk¹ "AllowAngular")
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 

@@ -1,0 +1,93 @@
+.register-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  font-family: sans-serif;
+}
+
+.register-container h2 {
+  margin-top: 0;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-submit {
+  flex: 1;
+  background: #7b2cbf;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-submit:hover {
+  background: #6a23a3;
+}
+
+.btn-cancel {
+  flex: 1;
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-cancel:hover {
+  background: #d5d5d5;
+}
+
+/* Styl dla czerwonych komunikatów o błędach pod polami */
+.error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Wizualne wyróżnienie pola, które ma błąd */
+.form-control.ng-touched.ng-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.2);
+}
+
+/* Styl dla zablokowanego przycisku "Stwórz konto" */
+button:disabled {
+  background-color: #6c757d !important;
+  cursor: not-allowed;
+  opacity: 0.65;
+}

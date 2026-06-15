@@ -1,9 +1,17 @@
 {
-  "openapi": "3.0.4",
+  "openapi": "3.1.1",
   "info": {
-    "title": "AuctionSystem.API",
-    "version": "1.0"
+    "title": "AuctionSystem.API | v1",
+    "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://localhost:7185"
+    },
+    {
+      "url": "http://localhost:5026"
+    }
+  ],
   "paths": {
     "/api/Auctions": {
       "get": {
@@ -79,7 +87,8 @@
                 "$ref": "#/components/schemas/AuctionCreateDto"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -116,7 +125,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -154,7 +167,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -176,7 +193,8 @@
                 "$ref": "#/components/schemas/AuctionCreateDto"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -194,7 +212,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -217,7 +239,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -264,7 +290,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -286,7 +316,8 @@
                 "$ref": "#/components/schemas/BidCreateDto"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -353,7 +384,8 @@
                 "$ref": "#/components/schemas/UserRegisterDto"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -390,7 +422,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -428,7 +464,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -450,7 +490,8 @@
                 "$ref": "#/components/schemas/UserRegisterDto"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -468,7 +509,11 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
               "format": "int32"
             }
           }
@@ -485,12 +530,12 @@
     "schemas": {
       "AuctionCreateDto": {
         "required": [
-          "category",
+          "title",
           "description",
-          "endDate",
-          "ownerId",
+          "category",
           "startingPrice",
-          "title"
+          "endDate",
+          "ownerId"
         ],
         "type": "object",
         "properties": {
@@ -500,17 +545,18 @@
             "type": "string"
           },
           "description": {
-            "minLength": 1,
             "type": "string"
           },
           "category": {
-            "minLength": 1,
             "type": "string"
           },
           "startingPrice": {
-            "maximum": 1.7976931348623157E+308,
             "minimum": 0.01,
-            "type": "number",
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
             "format": "double"
           },
           "endDate": {
@@ -518,37 +564,49 @@
             "format": "date-time"
           },
           "ownerId": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "AuctionDto": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "description": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "category": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "startingPrice": {
-            "type": "number",
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
             "format": "double"
           },
           "currentPrice": {
-            "type": "number",
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
             "format": "double"
           },
           "startDate": {
@@ -560,19 +618,20 @@
             "format": "date-time"
           },
           "status": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "ownerId": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           },
           "ownerUsername": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "BidCreateDto": {
         "required": [
@@ -582,27 +641,41 @@
         "type": "object",
         "properties": {
           "amount": {
-            "maximum": 1.7976931348623157E+308,
             "minimum": 0.01,
-            "type": "number",
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
             "format": "double"
           },
           "bidderId": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "BidDto": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           },
           "amount": {
-            "type": "number",
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
             "format": "double"
           },
           "bidTime": {
@@ -610,43 +683,46 @@
             "format": "date-time"
           },
           "bidderId": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           },
           "bidderUsername": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "UserDto": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
             "format": "int32"
           },
           "username": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "email": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
             "format": "date-time"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "UserRegisterDto": {
         "required": [
+          "username",
           "email",
-          "password",
-          "username"
+          "password"
         ],
         "type": "object",
         "properties": {
@@ -656,17 +732,14 @@
             "type": "string"
           },
           "email": {
-            "minLength": 1,
-            "type": "string",
-            "format": "email"
+            "type": "string"
           },
           "password": {
             "maxLength": 100,
             "minLength": 6,
             "type": "string"
           }
-        },
-        "additionalProperties": false
+        }
       }
     }
   },
