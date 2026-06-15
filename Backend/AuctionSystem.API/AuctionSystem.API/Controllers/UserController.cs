@@ -5,64 +5,60 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuctionSystem.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] // Adres to: api/users
-    public class UsersController : ControllerBase
+    // Obsługujemy zarówno api/user jak i api/users, żeby Angular zawsze trafił w odpowiednie miejsce!
+    [Route("api/user")]
+    [Route("api/users")]
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
-        // GET: api/users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
         }
 
-        // GET: api/users/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
-            if (user == null) return NotFound(new { message = $"Użytkownik o ID {id} nie istnieje." });
-
+            if (user == null) return NotFound(new { message = "Użytkownik nie istnieje." });
             return Ok(user);
         }
 
-        // POST: api/users
         [HttpPost]
-        public async Task<ActionResult<UserDto>> Register(UserRegisterDto registerDto)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto registerDto)
         {
             var createdUser = await _userService.RegisterUserAsync(registerDto);
             if (createdUser == null)
+            {
                 return BadRequest(new { message = "Nazwa użytkownika jest już zajęta." });
-
-            // Zwraca status 201 Created oraz nagłówek Location wskazujący na nowo utworzony zasób
-            return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
+            }
+            return Ok(createdUser);
         }
 
-        // PUT: api/users/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserRegisterDto updateDto)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var result = await _userService.UpdateUserAsync(id, updateDto);
-            if (!result) return NotFound(new { message = "Nie można zaktualizować. Użytkownik nie istnieje." });
+            if (loginDto == null || string.IsNullOrEmpty(loginDto.Username) || string.IsNullOrEmpty(loginDto.Password))
+            {
+                return BadRequest(new { message = "Wymagane jest podanie loginu i hasła." });
+            }
 
-            return NoContent(); // Status 204
-        }
+            var userDto = await _userService.AuthenticateAsync(loginDto);
 
-        // DELETE: api/users/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var result = await _userService.DeleteUserAsync(id);
-            if (!result) return NotFound(new { message = "Nie można usunąć. Użytkownik nie istnieje." });
+            if (userDto == null)
+            {
+                return Unauthorized(new { message = "Nieprawidłowy login lub hasło." });
+            }
 
-            return NoContent(); // Status 204
+            return Ok(userDto);
         }
     }
 }
