@@ -2998,23 +2998,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jano\\.nuget\\packages\\": {},
+    "C:\\Users\\rogos\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jano\\Desktop\\studia\\Projekt\\Backend\\AuctionSystem.API\\AuctionSystem.API\\AuctionSystem.API.csproj",
+      "projectUniqueName": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\AuctionSystem.API.csproj",
       "projectName": "AuctionSystem.API",
-      "projectPath": "C:\\Users\\Jano\\Desktop\\studia\\Projekt\\Backend\\AuctionSystem.API\\AuctionSystem.API\\AuctionSystem.API.csproj",
-      "packagesPath": "C:\\Users\\Jano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jano\\Desktop\\studia\\Projekt\\Backend\\AuctionSystem.API\\AuctionSystem.API\\obj\\",
+      "projectPath": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\AuctionSystem.API.csproj",
+      "packagesPath": "C:\\Users\\rogos\\.nuget\\packages\\",
+      "outputPath": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jano\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rogos\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3023,6 +3023,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3101,7 +3102,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300-preview.0.26177.108/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

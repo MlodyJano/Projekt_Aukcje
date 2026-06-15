@@ -1,0 +1,108 @@
+<div class="container">
+  <!-- Header z tytułem -->
+  <div class="header">
+    <h1>🔨 Aukcje Systemowe</h1>
+    <p class="subtitle">Przeglądaj i licytuj przedmioty z naszej bazy</p>
+  </div>
+
+  <!-- Filtry -->
+  <div class="filters">
+    <div class="filter-group">
+      <label for="category">Kategoria:</label>
+      <select 
+        id="category"
+        [(ngModel)]="selectedCategory" 
+        (change)="onFilterChange()"
+        class="filter-select">
+        <option value="">Wszystkie kategorie</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="status">Status:</label>
+      <select 
+        id="status"
+        [(ngModel)]="selectedStatus" 
+        (change)="onFilterChange()"
+        class="filter-select">
+        <option value="">Wszystkie statusy</option>
+        <option *ngFor="let stat of statuses" [value]="stat">{{ stat }}</option>
+      </select>
+    </div>
+
+    <button (click)="loadAuctions()" class="btn-refresh">
+      🔄 Odśwież
+    </button>
+  </div>
+
+  <!-- Komunikaty -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    ❌ {{ errorMessage }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Ładowanie aukcji...</p>
+  </div>
+
+  <!-- Lista aukcji -->
+  <div *ngIf="!isLoading && auctions.length === 0" class="no-data">
+    <p>📭 Brak aukcji spełniających wybrane kryteria</p>
+  </div>
+
+  <div *ngIf="!isLoading && auctions.length > 0" class="auctions-grid">
+    <div *ngFor="let auction of auctions" class="auction-card" [ngClass]="getStatusClass(auction.status)">
+      <!-- Nagłówek karty -->
+      <div class="card-header">
+        <h3>{{ auction.title }}</h3>
+        <span class="badge" [ngClass]="getStatusClass(auction.status)">
+          {{ auction.status }}
+        </span>
+      </div>
+
+      <!-- Zawartość karty -->
+      <div class="card-body">
+        <p class="description">{{ auction.description }}</p>
+
+        <div class="info-row">
+          <span class="label">📁 Kategoria:</span>
+          <span class="value">{{ auction.category }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">💰 Cena minimalna:</span>
+          <span class="value">{{ auction.startingPrice | number:'1.2-2' }} zł</span>
+        </div>
+
+        <div class="info-row highlight">
+          <span class="label">🔥 Aktualna cena:</span>
+          <span class="value price">{{ auction.currentPrice | number:'1.2-2' }} zł</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">👤 Wystawiający:</span>
+          <span class="value">{{ auction.ownerUsername }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">⏱️ Pozostało:</span>
+          <span class="value countdown">{{ getTimeRemaining(auction.endDate) }}</span>
+        </div>
+
+        <div class="dates">
+          <small>Start: {{ auction.startDate | date:'short' }}</small>
+          <small>Koniec: {{ auction.endDate | date:'short' }}</small>
+        </div>
+      </div>
+
+      <!-- Stopka karty -->
+      <div class="card-footer">
+        <button [routerLink]="['/auction', auction.id]" class="btn-details">
+          📋 Szczegóły
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
