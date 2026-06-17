@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AuctionSystem.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4381a6dabc233f3b8fb14754f5969d495fe97c0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0bfa2c81db204ae3d84a795f48d4cd62ecdc2f02")]
 [assembly: System.Reflection.AssemblyProductAttribute("AuctionSystem.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AuctionSystem.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

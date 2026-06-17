@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuctionSystem.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] // Adres w przeglądarce: api/auctions
+    [Route("api/[controller]")]
     public class AuctionsController : ControllerBase
     {
         private readonly IAuctionService _auctionService;
+        private readonly IWebHostEnvironment _env;
 
-        public AuctionsController(IAuctionService auctionService)
+        public AuctionsController(IAuctionService auctionService, IWebHostEnvironment env)
         {
             _auctionService = auctionService;
+            _env = env;
         }
 
-        // GET: api/auctions?category=Elektronika&status=Active
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuctionDto>>> GetAuctions(
             [FromQuery] string? category,
@@ -25,17 +26,14 @@ namespace AuctionSystem.API.Controllers
             return Ok(auctions);
         }
 
-        // GET: api/auctions/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<AuctionDto>> GetAuction(int id)
         {
             var auction = await _auctionService.GetAuctionByIdAsync(id);
             if (auction == null) return NotFound(new { message = $"Aukcja o ID {id} nie istnieje." });
-
             return Ok(auction);
         }
 
-        // POST: api/auctions
         [HttpPost]
         public async Task<ActionResult<AuctionDto>> CreateAuction([FromBody] AuctionCreateDto createDto)
         {
@@ -43,23 +41,47 @@ namespace AuctionSystem.API.Controllers
             return CreatedAtAction(nameof(GetAuction), new { id = createdAuction.Id }, createdAuction);
         }
 
-        // PUT: api/auctions/{id}
+        [HttpPost("{id}/image")]
+        public async Task<IActionResult> UploadImage(int id, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest(new { message = "Brak pliku." });
+
+            var allowedTypes = new[] { "image/jpeg", "image/png", "image/webp" };
+            if (!allowedTypes.Contains(file.ContentType))
+                return BadRequest(new { message = "Dozwolone formaty: jpg, png, webp." });
+
+            var uploadsPath = Path.Combine(_env.ContentRootPath, "uploads");
+            Directory.CreateDirectory(uploadsPath);
+
+            var fileName = $"{id}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadsPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var imagePath = $"/uploads/{fileName}";
+            var result = await _auctionService.UpdateImagePathAsync(id, imagePath);
+            if (!result) return NotFound(new { message = "Aukcja nie istnieje." });
+
+            return Ok(new { imagePath });
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAuction(int id, [FromBody] AuctionCreateDto updateDto)
         {
             var result = await _auctionService.UpdateAuctionAsync(id, updateDto);
             if (!result) return NotFound(new { message = "Nie można zaktualizować. Aukcja nie istnieje." });
-
             return NoContent();
         }
 
-        // DELETE: api/auctions/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuction(int id)
         {
             var result = await _auctionService.DeleteAuctionAsync(id);
             if (!result) return NotFound(new { message = "Nie można usunąć. Aukcja nie istnieje." });
-
             return NoContent();
         }
     }

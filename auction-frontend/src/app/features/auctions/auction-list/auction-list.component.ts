@@ -1,17 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AuctionService } from '../../../core/services/auction.service';
 import { Auction } from '../../../shared/models/auction.model';
+  
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-auction-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NgOptimizedImage],
   templateUrl: './auction-list.component.html',
   styleUrls: ['./auction-list.component.css']
 })
@@ -20,17 +21,18 @@ export class AuctionListComponent implements OnInit, OnDestroy {
   categories: string[] = [];
   statuses: string[] = [];
 
-  // Filtry
   selectedCategory: string = '';
   selectedStatus: string = '';
 
-  // Stany
   isLoading = false;
   errorMessage = '';
 
   private destroy$ = new Subject<void>();
 
-  constructor(private auctionService: AuctionService) {}
+  constructor(
+    private auctionService: AuctionService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.categories = this.auctionService.getCategories();
@@ -44,16 +46,17 @@ export class AuctionListComponent implements OnInit, OnDestroy {
 
     this.auctionService
       .getAuctions(this.selectedCategory || undefined, this.selectedStatus || undefined)
-      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
           this.auctions = data;
           this.isLoading = false;
+          this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('Błąd podczas pobierania aukcji:', error);
-          this.errorMessage = 'Nie udało się pobrać aukcji. Sprawdzenie połączenie z backendem.';
+          console.error('Błąd:', error);
+          this.errorMessage = 'Nie udało się pobrać aukcji.';
           this.isLoading = false;
+          this.cdr.detectChanges();
         }
       });
   }
@@ -85,6 +88,18 @@ export class AuctionListComponent implements OnInit, OnDestroy {
     if (days > 0) return `${days}d ${hours}h`;
     if (hours > 0) return `${hours}h ${minutes}m`;
     return `${minutes}m`;
+  }
+  getDefaultImage(category: string): string {
+    const map: { [key: string]: string } = {
+      'Elektronika': 'categories/elektronika.png',
+      'Moda': 'categories/moda.png',
+      'Dom i Ogród': 'categories/dom.png',
+      'Motoryzacja': 'categories/motoryzacja.png',
+      'Książki': 'categories/ksiazki.png',
+      'Antyki': 'categories/antyki.png',
+      'Sport': 'categories/sport.png'
+    };
+    return map[category] || 'categories/inne.png';
   }
 
   ngOnDestroy(): void {

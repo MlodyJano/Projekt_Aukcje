@@ -7,14 +7,10 @@ import { Auction } from '../../shared/models/auction.model';
   providedIn: 'root'
 })
 export class AuctionService {
-  // Używamy względnego URL '/api' tak, aby działał proxy podczas developmentu
   private apiUrl = '/api/auctions';
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Pobiera wszystkie aukcje z opcjonalnym filtrowaniem
-   */
   getAuctions(category?: string, status?: string): Observable<Auction[]> {
     let params = new HttpParams();
 
@@ -24,45 +20,32 @@ export class AuctionService {
     return this.http.get<Auction[]>(this.apiUrl, { params });
   }
 
-  /**
-   * Pobiera szczegóły aukcji po ID
-   */
   getAuctionById(id: number): Observable<Auction> {
     return this.http.get<Auction>(`${this.apiUrl}/${id}`);
   }
 
-  /**
-   * Tworzy nową aukcję
-   */
   createAuction(auction: any): Observable<Auction> {
     return this.http.post<Auction>(this.apiUrl, auction);
   }
 
-  /**
-   * Aktualizuje aukcję
-   */
   updateAuction(id: number, auction: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, auction);
   }
 
-  /**
-   * Usuwa aukcję
-   */
   deleteAuction(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  /**
-   * Pobiera dostępne kategorie
-   */
   getCategories(): string[] {
     return ['Elektronika', 'Moda', 'Antyki', 'Sport', 'Książki', 'Inne'];
   }
 
-  /**
-   * Pobiera dostępne statusy
-   */
   getStatuses(): string[] {
     return ['Active', 'Ended', 'Cancelled'];
   }
+  uploadImage(id: number, file: File): Observable<{ imagePath: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  return this.http.post<{ imagePath: string }>(`${this.apiUrl}/${id}/image`, formData);
+}
 }

@@ -12,6 +12,7 @@
         public DateTime EndDate { get; set; }
         public string Status { get; set; } = string.Empty;
         public int OwnerId { get; set; }
-        public string OwnerUsername { get; set; } = string.Empty; // Żeby frontend od razu znał login wystawcy
+        public string OwnerUsername { get; set; } = string.Empty; 
+        public string? ImagePath { get; set; }
     }
 }

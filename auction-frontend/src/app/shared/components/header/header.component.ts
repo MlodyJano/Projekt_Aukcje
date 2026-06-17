@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
+import { UserDto } from '../../models/user.dto';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   template: `
     <header class="app-header">
       <div class="header-content">
@@ -15,13 +18,21 @@ import { RouterModule } from '@angular/router';
           <a routerLink="/auctions" routerLinkActive="active" class="nav-link">
             📋 Aukcje
           </a>
-          <a href="#" class="nav-link">
-            👤 Profil
-          </a>
-          <a href="#" class="nav-link">
-            📞 Kontakt
+          <a routerLink="/add-auction" routerLinkActive="active" class="nav-link">
+            ➕ Wystaw aukcję
           </a>
         </nav>
+        <div class="auth-section">
+          <span *ngIf="currentUser" class="user-info">
+            👤 {{ currentUser.username }}
+          </span>
+          <button *ngIf="currentUser" (click)="logout()" class="auth-btn logout-btn">
+            Wyloguj się
+          </button>
+          <a *ngIf="!currentUser" routerLink="/login" class="auth-btn login-btn">
+            Zaloguj się
+          </a>
+        </div>
       </div>
     </header>
   `,
@@ -78,6 +89,45 @@ import { RouterModule } from '@angular/router';
       color: white;
     }
 
+    .auth-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-info {
+      color: #ecf0f1;
+      font-weight: 500;
+    }
+
+    .auth-btn {
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .login-btn {
+      background-color: #27ae60;
+      color: white;
+    }
+
+    .login-btn:hover {
+      background-color: #229954;
+    }
+
+    .logout-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+
     @media (max-width: 768px) {
       .header-content {
         flex-direction: column;
@@ -88,7 +138,28 @@ import { RouterModule } from '@angular/router';
         width: 100%;
         justify-content: center;
       }
+
+      .auth-section {
+        width: 100%;
+        justify-content: center;
+      }
     }
   `]
 })
-export class HeaderComponent {}
+export class HeaderComponent implements OnInit {
+  currentUser: UserDto | null = null;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+}
+
