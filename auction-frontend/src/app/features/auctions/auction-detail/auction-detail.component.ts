@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AuctionService } from '../../../core/services/auction.service';
 import { BidService } from '../../../core/services/bid.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Auction } from '../../../shared/models/auction.model';
 import { Bid } from '../../../shared/models/bid.model';
 
@@ -21,11 +22,8 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
   auction: Auction | null = null;
   bids: Bid[] = [];
 
-  // Forma licytacji
   bidAmount = 0;
-  bidderId = 0;
 
-  // Stany
   isLoading = false;
   isLoadingBids = false;
   isSubmittingBid = false;
@@ -38,7 +36,9 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private auctionService: AuctionService,
-    private bidService: BidService
+    private bidService: BidService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +61,13 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
           this.auction = data;
           this.bidAmount = data.currentPrice + 100;
           this.isLoading = false;
+          this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('Błąd podczas pobierania aukcji:', error);
+          console.error(error);
           this.errorMessage = 'Nie udało się pobrać szczegółów aukcji.';
           this.isLoading = false;
+          this.cdr.detectChanges();
         }
       });
   }
@@ -79,10 +81,12 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.bids = data.sort((a, b) => new Date(b.bidTime).getTime() - new Date(a.bidTime).getTime());
           this.isLoadingBids = false;
+          this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('Błąd podczas pobierania ofert:', error);
+          console.error(error);
           this.isLoadingBids = false;
+          this.cdr.detectChanges();
         }
       });
   }
@@ -90,8 +94,9 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
   submitBid(): void {
     if (!this.auction) return;
 
-    if (!this.bidderId || this.bidderId <= 0) {
-      this.errorMessage = 'Podaj ID licytanta';
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) {
+      this.router.navigate(['/login']);
       return;
     }
 
@@ -107,23 +112,21 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
     this.bidService
       .placeBid(this.auction.id, {
         amount: this.bidAmount,
-        bidderId: this.bidderId
+        bidderId: currentUser.id
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           this.successMessage = response.message || 'Oferta złożona pomyślnie!';
           this.isSubmittingBid = false;
-
-          // Odśwież aukcję i oferty
           this.loadAuctionDetail(this.auction!.id);
           this.loadBids(this.auction!.id);
-          this.bidAmount = 0;
         },
         error: (error) => {
-          console.error('Błąd podczas składania oferty:', error);
+          console.error(error);
           this.errorMessage = error.error?.message || 'Nie udało się złożyć oferty.';
           this.isSubmittingBid = false;
+          this.cdr.detectChanges();
         }
       });
   }

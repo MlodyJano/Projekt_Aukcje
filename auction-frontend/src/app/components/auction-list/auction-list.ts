@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { AuctionService, AuctionDto } from '../../../app/service/auction';
 
 @Component({
-  selector: 'app-auction-list',
+  selector: 'app-auction-list-legacy',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './auction-list.html',
   styleUrls: ['./auction-list.css']
 })
 export class AuctionListComponent implements OnInit {
-  auctions: AuctionDto[] = [];
+  auctions: (AuctionDto & { bids?: any[] })[] = [];
   selectedCategory: string = '';
   bidderName: string = localStorage.getItem('username') || 'Kupujący Testowy';
 
@@ -37,11 +37,9 @@ export class AuctionListComponent implements OnInit {
   }
 
   onBid(auctionId: number, currentPrice: number): void {
-    const raise = 10;
-    const newBid = currentPrice + raise;
-
+    const newBid = currentPrice + 10;
     this.auctionService.placeBid(auctionId, newBid, this.bidderName).subscribe({
-      next: (response: any) => {
+      next: () => {
         alert('Oferta złożona pomyślnie!');
         this.loadAuctions();
       },

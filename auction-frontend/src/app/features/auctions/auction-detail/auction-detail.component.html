@@ -1,18 +1,14 @@
 <div class="container">
-  <!-- Guzik powrotu -->
   <button (click)="goBack()" class="btn-back">
-    ← Powrót do listy
+    Powrot do listy
   </button>
 
-  <!-- Loading -->
   <div *ngIf="isLoading" class="loading">
     <div class="spinner"></div>
-    <p>Ładowanie szczegółów aukcji...</p>
+    <p>Ladowanie szczegolów aukcji...</p>
   </div>
 
-  <!-- Szczegóły aukcji -->
   <div *ngIf="!isLoading && auction" [ngClass]="getStatusClass(auction.status)" class="auction-detail">
-    <!-- Nagłówek -->
     <div class="detail-header">
       <div>
         <h1>{{ auction.title }}</h1>
@@ -23,113 +19,96 @@
       </span>
     </div>
 
-    <!-- Grid główny -->
     <div class="detail-grid">
-      <!-- Kolumna 1: Informacje aukcji -->
       <div class="info-section">
         <h2>Informacje o aukcji</h2>
 
         <div class="info-item">
-          <span class="label">📁 Kategoria:</span>
+          <span class="label">Kategoria:</span>
           <span class="value">{{ auction.category }}</span>
         </div>
 
         <div class="info-item">
-          <span class="label">💰 Cena minimalna:</span>
-          <span class="value">{{ auction.startingPrice | number:'1.2-2' }} zł</span>
+          <span class="label">Cena minimalna:</span>
+          <span class="value">{{ auction.startingPrice | number:'1.2-2' }} zl</span>
         </div>
 
         <div class="info-item highlight">
-          <span class="label">🔥 Aktualna cena:</span>
-          <span class="value price">{{ auction.currentPrice | number:'1.2-2' }} zł</span>
+          <span class="label">Aktualna cena:</span>
+          <span class="value price">{{ auction.currentPrice | number:'1.2-2' }} zl</span>
         </div>
 
         <div class="info-item">
-          <span class="label">👤 Wystawiający:</span>
-          <span class="value">{{ auction.ownerUsername }} (ID: {{ auction.ownerId }})</span>
+          <span class="label">Wystawiajacy:</span>
+          <span class="value">{{ auction.ownerUsername }}</span>
         </div>
 
         <div class="info-item">
-          <span class="label">⏱️ Pozostało:</span>
+          <span class="label">Pozostalo:</span>
           <span class="value countdown">{{ getTimeRemaining(auction.endDate) }}</span>
         </div>
 
         <div class="dates-section">
           <div>
-            <small class="date-label">Rozpoczęcie:</small>
+            <small class="date-label">Rozpoczecie:</small>
             <small class="date-value">{{ auction.startDate | date:'short' }}</small>
           </div>
           <div>
-            <small class="date-label">Zakończenie:</small>
+            <small class="date-label">Zakonczenie:</small>
             <small class="date-value">{{ auction.endDate | date:'short' }}</small>
           </div>
         </div>
       </div>
 
-      <!-- Kolumna 2: Formularz licytacji -->
       <div class="bid-section">
-        <h2>Złóż ofertę</h2>
+        <h2>Zloz oferte</h2>
 
         <div class="form-group">
-          <label for="bidderId">ID Licytanta:</label>
-          <input 
-            id="bidderId"
-            type="number" 
-            [(ngModel)]="bidderId"
-            placeholder="Wpisz swoje ID"
-            class="form-control"
-            [disabled]="isSubmittingBid"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="bidAmount">Kwota oferty (zł):</label>
-          <input 
+          <label for="bidAmount">Kwota oferty (zl):</label>
+          <input
             id="bidAmount"
-            type="number" 
+            type="number"
             [(ngModel)]="bidAmount"
             [min]="auction.currentPrice + 0.01"
-            placeholder="Wpisz kwotę"
+            placeholder="Wpisz kwote"
             class="form-control"
             [disabled]="isSubmittingBid"
           />
-          <small class="hint">Minimum: {{ (auction.currentPrice + 100) | number:'1.2-2' }} zł</small>
+          <small class="hint">Minimum: {{ (auction.currentPrice + 100) | number:'1.2-2' }} zl</small>
         </div>
 
-        <button 
+        <button
           (click)="submitBid()"
           [disabled]="isSubmittingBid || auction.status !== 'Active'"
           class="btn-submit"
         >
-          {{ isSubmittingBid ? '⏳ Wysyłanie...' : '🔨 Licytuj teraz' }}
+          {{ isSubmittingBid ? 'Wysylanie...' : 'Licytuj teraz' }}
         </button>
 
         <div *ngIf="auction.status !== 'Active'" class="alert alert-info">
-          ℹ️ Ta aukcja jest {{ auction.status | lowercase }}. Nie możesz złożyć oferty.
+          Ta aukcja jest {{ auction.status | lowercase }}. Nie mozesz zlozyc oferty.
         </div>
       </div>
     </div>
 
-    <!-- Komunikaty -->
     <div *ngIf="successMessage" class="alert alert-success">
-      ✅ {{ successMessage }}
+      {{ successMessage }}
     </div>
     <div *ngIf="errorMessage" class="alert alert-danger">
-      ❌ {{ errorMessage }}
+      {{ errorMessage }}
     </div>
   </div>
 
-  <!-- Historia ofert -->
   <div *ngIf="!isLoading && auction" class="bids-section">
     <h2>Historia ofert</h2>
 
     <div *ngIf="isLoadingBids" class="loading-small">
       <div class="spinner-small"></div>
-      <p>Ładowanie ofert...</p>
+      <p>Ladowanie ofert...</p>
     </div>
 
     <div *ngIf="!isLoadingBids && bids.length === 0" class="no-bids">
-      <p>📭 Brak ofert dla tej aukcji</p>
+      <p>Brak ofert dla tej aukcji</p>
     </div>
 
     <div *ngIf="!isLoadingBids && bids.length > 0" class="bids-table">
@@ -141,15 +120,12 @@
       </div>
 
       <div *ngFor="let bid of bids; let i = index" class="bid-row" [ngClass]="i === 0 ? 'bid-row-highest' : ''">
-        <div class="col-rank">
-          <span class="rank-badge" *ngIf="i === 0">🥇 1.</span>
-          <span *ngIf="i !== 0">{{ i + 1 }}.</span>
-        </div>
+        <div class="col-rank">{{ i + 1 }}.</div>
         <div class="col-amount">
-          <strong>{{ bid.amount | number:'1.2-2' }} zł</strong>
+          <strong>{{ bid.amount | number:'1.2-2' }} zl</strong>
         </div>
         <div class="col-bidder">
-          {{ bid.bidderUsername }} (ID: {{ bid.bidderId }})
+          {{ bid.bidderUsername }}
         </div>
         <div class="col-time">
           {{ bid.bidTime | date:'medium' }}
