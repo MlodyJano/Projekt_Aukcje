@@ -7,7 +7,8 @@ import { Auction } from '../../shared/models/auction.model';
   providedIn: 'root'
 })
 export class AuctionService {
-  private apiUrl = 'https://localhost:7185/api/auctions';
+  // Używamy względnego URL '/api' tak, aby działał proxy podczas developmentu
+  private apiUrl = '/api/auctions';
 
   constructor(private http: HttpClient) {}
 

@@ -37,7 +37,7 @@ namespace AuctionSystem.API.Controllers
 
         // POST: api/auctions
         [HttpPost]
-        public async Task<ActionResult<AuctionDto>> CreateAuction(AuctionCreateDto createDto)
+        public async Task<ActionResult<AuctionDto>> CreateAuction([FromBody] AuctionCreateDto createDto)
         {
             var createdAuction = await _auctionService.CreateAuctionAsync(createDto);
             return CreatedAtAction(nameof(GetAuction), new { id = createdAuction.Id }, createdAuction);
@@ -45,7 +45,7 @@ namespace AuctionSystem.API.Controllers
 
         // PUT: api/auctions/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAuction(int id, AuctionCreateDto updateDto)
+        public async Task<IActionResult> UpdateAuction(int id, [FromBody] AuctionCreateDto updateDto)
         {
             var result = await _auctionService.UpdateAuctionAsync(id, updateDto);
             if (!result) return NotFound(new { message = "Nie można zaktualizować. Aukcja nie istnieje." });

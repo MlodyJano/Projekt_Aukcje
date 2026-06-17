@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, UserRegister } from '../models/user.model';
+import { User, UserRegister } from '../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://localhost:7185/api/users';
+  // Używamy względnego endpointu aby proxy deweloperskie przekazywało żądania do backendu
+  private apiUrl = '/api/users';
 
   constructor(private http: HttpClient) {}
 

@@ -70,4 +70,59 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seed przyk³adowych danych jeœli baza jest pusta (u³atwia rozwój frontendu)
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+
+        if (!context.Auctions.Any())
+        {
+            var ownerId = context.Users.First().Id;
+
+            context.Auctions.AddRange(
+                new AuctionSystem.API.Models.Auction
+                {
+                    Title = "Smartfon testowy",
+                    Description = "Telefon do testów",
+                    Category = "Elektronika",
+                    StartingPrice = 100,
+                    CurrentPrice = 100,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = DateTime.UtcNow.AddDays(7),
+                    OwnerId = ownerId
+                },
+                new AuctionSystem.API.Models.Auction
+                {
+                    Title = "Ksi¹¿ka programistyczna",
+                    Description = "Nauka C#",
+                    Category = "Ksi¹¿ki",
+                    StartingPrice = 25,
+                    CurrentPrice = 25,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = DateTime.UtcNow.AddDays(3),
+                    OwnerId = ownerId
+                }
+            );
+
+            context.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "B³¹d seedowania");
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+
+    Console.WriteLine($"Users: {context.Users.Count()}");
+    Console.WriteLine($"Auctions: {context.Auctions.Count()}");
+    Console.WriteLine($"Bids: {context.Bids.Count()}");
+}
+
 app.Run();

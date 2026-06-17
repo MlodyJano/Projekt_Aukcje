@@ -7,7 +7,8 @@ import { Bid, BidCreate } from '../../shared/models/bid.model';
   providedIn: 'root'
 })
 export class BidService {
-  private apiUrl = 'https://localhost:7185/api/auctions';
+  // Proxy dev-server maps /api -> https://localhost:7185
+  private apiUrl = '/api/auctions';
 
   constructor(private http: HttpClient) {}
 
