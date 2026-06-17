@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\migrations\\datacontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\migrations\\datacontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
       "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\bidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\bidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -97,12 +101,108 @@
     {
       "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\models\\bid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\models\\bid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
     },
     {
       "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\models\\auction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\models\\auction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\repositories\\auctionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\repositories\\auctionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\iuserservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\iuserservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\bidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\bidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\ibidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\ibidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\repositories\\bidrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\repositories\\bidrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\repositories\\ibidrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\repositories\\ibidrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\dtos\\biddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\dtos\\biddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\dtos\\bidcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\dtos\\bidcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\auctionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\auctionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\controllers\\bidscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\controllers\\bidscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\services\\iauctionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\services\\iauctionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\repositories\\iauctionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\repositories\\iauctionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\controllers\\auctionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\dtos\\auctiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\dtos\\auctiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\dtos\\auctioncreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\dtos\\auctioncreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\dtos\\userregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\dtos\\userregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\migrations\\20260611195111_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\migrations\\20260611195111_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\models\\bid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\models\\bid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+=======
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
       "AbsoluteMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|f:\\programowanie\\angular\\backend\\auctionsystem.api\\auctionsystem.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D36D04BE-9A64-41C0-81F8-54FA9889FC12}|AuctionSystem.API\\AuctionSystem.API.csproj|solutionrelative:auctionsystem.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -114,11 +214,27 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+<<<<<<< HEAD
+              "Title": "DataContextModelSnapshot.cs",
+              "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Migrations\\DataContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "AuctionSystem.API\\Migrations\\DataContextModelSnapshot.cs",
+              "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Migrations\\DataContextModelSnapshot.cs",
+              "RelativeToolTip": "AuctionSystem.API\\Migrations\\DataContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-15T09:19:12.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+=======
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "BidService.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\BidService.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Services\\BidService.cs",
@@ -130,7 +246,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 8,
+=======
               "DocumentIndex": 2,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "IBidService.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\IBidService.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Services\\IBidService.cs",
@@ -142,7 +262,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 9,
+=======
               "DocumentIndex": 3,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "BidRepository.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\BidRepository.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Repositories\\BidRepository.cs",
@@ -154,7 +278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "IBidRepository.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\IBidRepository.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Repositories\\IBidRepository.cs",
@@ -166,7 +290,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 11,
+=======
               "DocumentIndex": 5,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "BidDto.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\DTOs\\BidDto.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\DTOs\\BidDto.cs",
@@ -178,7 +306,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 12,
+=======
               "DocumentIndex": 6,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "BidCreateDto.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\DTOs\\BidCreateDto.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\DTOs\\BidCreateDto.cs",
@@ -190,7 +322,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 13,
+=======
               "DocumentIndex": 7,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "AuctionService.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\AuctionService.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Services\\AuctionService.cs",
@@ -208,14 +344,22 @@
               "RelativeDocumentMoniker": "AuctionSystem.API\\Program.cs",
               "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Program.cs",
               "RelativeToolTip": "AuctionSystem.API\\Program.cs",
+<<<<<<< HEAD
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACUAAAABAAAAAAAAAA==",
+=======
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABUAAAAwAAAAAAAAAA==",
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T19:40:39.182Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 14,
+=======
               "DocumentIndex": 8,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "BidsController.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Controllers\\BidsController.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Controllers\\BidsController.cs",
@@ -227,7 +371,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 15,
+=======
               "DocumentIndex": 9,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "IAuctionService.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\IAuctionService.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Services\\IAuctionService.cs",
@@ -239,19 +387,28 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 3,
+=======
               "DocumentIndex": 10,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "AuctionRepository.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\AuctionRepository.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Repositories\\AuctionRepository.cs",
               "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\AuctionRepository.cs",
               "RelativeToolTip": "AuctionSystem.API\\Repositories\\AuctionRepository.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAewDAAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAuwCAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T14:54:21.789Z"
+              "WhenOpened": "2026-06-12T14:54:21.789Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 16,
+=======
               "DocumentIndex": 11,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "IAuctionRepository.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\IAuctionRepository.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Repositories\\IAuctionRepository.cs",
@@ -263,7 +420,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 17,
+=======
               "DocumentIndex": 12,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "AuctionsController.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Controllers\\AuctionsController.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Controllers\\AuctionsController.cs",
@@ -275,7 +436,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 18,
+=======
               "DocumentIndex": 13,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "AuctionDto.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\DTOs\\AuctionDto.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\DTOs\\AuctionDto.cs",
@@ -287,7 +452,11 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 19,
+=======
               "DocumentIndex": 14,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "AuctionCreateDto.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\DTOs\\AuctionCreateDto.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\DTOs\\AuctionCreateDto.cs",
@@ -299,6 +468,9 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 20,
+=======
               "DocumentIndex": 15,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\UserRepository.cs",
@@ -312,6 +484,7 @@
             {
               "$type": "Document",
               "DocumentIndex": 16,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Repositories\\IUserRepository.cs",
@@ -323,19 +496,39 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 5,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "AuctionSystem.API\\Repositories\\UserRepository.cs",
+              "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "AuctionSystem.API\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAswAoAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T19:57:10.833Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+=======
               "DocumentIndex": 17,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "IUserServices.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\IUserServices.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Services\\IUserServices.cs",
               "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\IUserServices.cs",
               "RelativeToolTip": "AuctionSystem.API\\Services\\IUserServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T20:01:07.691Z"
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 21,
+=======
               "DocumentIndex": 18,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "UserDto.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\DTOs\\UserDto.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\DTOs\\UserDto.cs",
@@ -347,19 +540,23 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
+              "DocumentIndex": 4,
+=======
               "DocumentIndex": 19,
+>>>>>>> 116236605183957f39815e5bf995c8b4e803760a
               "Title": "UserService.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Services\\UserService.cs",
               "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Services\\UserService.cs",
               "RelativeToolTip": "AuctionSystem.API\\Services\\UserService.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAcwFsAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAAAFwAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T20:01:37.306Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "UserRegisterDto.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\DTOs\\UserRegisterDto.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\DTOs\\UserRegisterDto.cs",
@@ -371,7 +568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "20260611195111_InitialCreate.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Migrations\\20260611195111_InitialCreate.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Migrations\\20260611195111_InitialCreate.cs",
@@ -383,7 +580,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "DataContext.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Data\\DataContext.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Data\\DataContext.cs",
@@ -395,7 +592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "Bid.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Models\\Bid.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Models\\Bid.cs",
@@ -407,19 +604,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 2,
               "Title": "Auction.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Models\\Auction.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Models\\Auction.cs",
               "ToolTip": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Models\\Auction.cs",
               "RelativeToolTip": "AuctionSystem.API\\Models\\Auction.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T19:43:52.937Z"
+              "WhenOpened": "2026-06-11T19:43:52.937Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "User.cs",
               "DocumentMoniker": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\Models\\User.cs",
               "RelativeDocumentMoniker": "AuctionSystem.API\\Models\\User.cs",
