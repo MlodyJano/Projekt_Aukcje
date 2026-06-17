@@ -25,6 +25,14 @@ export class AuctionCreateComponent implements OnInit {
   imagePreview: string | null = null;
   isSubmitting = false;
 
+  errors: { [key: string]: string } = {};
+
+  get minDate(): string {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 30);
+    return now.toISOString().slice(0, 16);
+  }
+
   constructor(private auctionService: AuctionService, private router: Router) {}
 
   ngOnInit(): void {
@@ -49,11 +57,40 @@ export class AuctionCreateComponent implements OnInit {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  onSubmit(): void {
-    if (!this.newAuction.title || !this.newAuction.endDate || !this.newAuction.category) {
-      alert('Tytuł, kategoria i data zakończenia są wymagane!');
-      return;
+  validate(): boolean {
+    this.errors = {};
+
+    if (!this.newAuction.title.trim()) {
+      this.errors['title'] = 'Tytuł jest wymagany.';
+    } else if (this.newAuction.title.trim().length < 3) {
+      this.errors['title'] = 'Tytuł musi mieć co najmniej 3 znaki.';
     }
+
+    if (!this.newAuction.category) {
+      this.errors['category'] = 'Wybierz kategorię.';
+    }
+
+    if (!this.newAuction.description.trim()) {
+      this.errors['description'] = 'Opis jest wymagany.';
+    } else if (this.newAuction.description.trim().length < 10) {
+      this.errors['description'] = 'Opis musi mieć co najmniej 10 znaków.';
+    }
+
+    if (!this.newAuction.startingPrice || this.newAuction.startingPrice <= 0) {
+      this.errors['startingPrice'] = 'Cena musi być większa od zera.';
+    }
+
+    if (!this.newAuction.endDate) {
+      this.errors['endDate'] = 'Data zakończenia jest wymagana.';
+    } else if (new Date(this.newAuction.endDate) <= new Date()) {
+      this.errors['endDate'] = 'Data zakończenia musi być w przyszłości.';
+    }
+
+    return Object.keys(this.errors).length === 0;
+  }
+
+  onSubmit(): void {
+    if (!this.validate()) return;
 
     this.isSubmitting = true;
 
@@ -74,7 +111,7 @@ export class AuctionCreateComponent implements OnInit {
         }
       },
       error: () => {
-        alert('Nie udało się dodać aukcji.');
+        this.errors['general'] = 'Nie udało się dodać aukcji. Spróbuj ponownie.';
         this.isSubmitting = false;
       }
     });

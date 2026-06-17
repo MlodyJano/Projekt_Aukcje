@@ -4,6 +4,10 @@ export interface Bid {
   bidTime: Date;
   bidderId: number;
   bidderUsername: string;
+  auctionId: number;
+  auctionTitle: string;
+  auctionCategory: string;
+  auctionImagePath?: string;
 }
 
 export interface BidCreate {

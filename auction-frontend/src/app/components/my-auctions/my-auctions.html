@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="header">
+    <h1>Moje aukcje</h1>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Ladowanie...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && auctions.length === 0" class="no-data">
+    <p>Nie masz zadnych aukcji.</p>
+    <a routerLink="/add-auction" class="btn-add">Wystaw pierwsza aukcje</a>
+  </div>
+
+  <div *ngIf="!isLoading && auctions.length > 0" class="auctions-grid">
+    <div *ngFor="let auction of auctions" class="auction-card" [ngClass]="getStatusClass(auction.status)">
+      <div class="card-image-container">
+        <span class="status-badge" [ngClass]="getStatusClass(auction.status)">
+          {{ translateStatus(auction.status) }}
+        </span>
+        <img
+          [src]="auction.imagePath ? 'http://localhost:5026' + auction.imagePath : getDefaultImage(auction.category)"
+          alt="{{ auction.title }}"
+          class="auction-image"
+        />
+      </div>
+
+      <div class="card-body">
+        <small class="category">{{ auction.category }}</small>
+        <h3>{{ auction.title }}</h3>
+
+        <div class="price-row">
+          <div>
+            <span class="price-label">Aktualna cena</span>
+            <span class="price">{{ auction.currentPrice | number:'1.2-2' }} zl</span>
+          </div>
+          <div class="text-right">
+            <span class="price-label">Min.</span>
+            <span class="price-min">{{ auction.startingPrice | number:'1.2-2' }} zl</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button [routerLink]="['/auctions', auction.id]" class="btn-action">
+          Szczegóły aukcji
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

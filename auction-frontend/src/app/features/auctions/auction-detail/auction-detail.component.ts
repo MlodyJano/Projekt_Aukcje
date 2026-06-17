@@ -27,6 +27,7 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
   isLoading = false;
   isLoadingBids = false;
   isSubmittingBid = false;
+  isCancelling = false;
   errorMessage = '';
   successMessage = '';
 
@@ -124,7 +125,7 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error(error);
-          this.errorMessage = error.error?.message || 'Nie udało się złożyć oferty.';
+          this.errorMessage = error.error?.message ?? error.message ?? 'Nie udało się złożyć oferty.';
           this.isSubmittingBid = false;
           this.cdr.detectChanges();
         }
@@ -158,15 +159,54 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
 
   getDefaultImage(category: string): string {
     const map: { [key: string]: string } = {
-      'Elektronika': 'categories/elektronika.png',
-      'Moda': 'categories/moda.png',
-      'Dom i Ogród': 'categories/dom.png',
-      'Motoryzacja': 'categories/motoryzacja.png',
-      'Książki': 'categories/ksiazki.png',
-      'Antyki': 'categories/antyki.png',
-      'Sport': 'categories/sport.png'
+      'Elektronika': 'categories/elektronika.svg',
+      'Moda': 'categories/moda.svg',
+      'Dom i Ogród': 'categories/dom.svg',
+      'Motoryzacja': 'categories/motoryzacja.svg',
+      'Książki': 'categories/ksiazki.svg',
+      'Antyki': 'categories/antyki.svg',
+      'Sport': 'categories/sport.svg'
     };
-    return map[category] || 'categories/inne.png';
+    return map[category] || 'categories/inne.svg';
+  }
+
+  get isOwner(): boolean {
+    const currentUser = this.authService.currentUser;
+    return !!currentUser && !!this.auction && currentUser.id === this.auction.ownerId;
+  }
+
+  cancelAuction(): void {
+    if (!this.auction) return;
+
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const confirmed = confirm('Czy na pewno chcesz anulować tę aukcję? Tej operacji nie można odwrócić.');
+    if (!confirmed) return;
+
+    this.isCancelling = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.auctionService
+      .cancelAuction(this.auction.id, currentUser.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.successMessage = response.message || 'Aukcja została anulowana.';
+          this.isCancelling = false;
+          this.loadAuctionDetail(this.auction!.id);
+        },
+        error: (error) => {
+          console.error(error);
+          this.errorMessage = error.error?.message || 'Nie udało się anulować aukcji.';
+          this.isCancelling = false;
+          this.cdr.detectChanges();
+        }
+      });
   }
 
   goBack(): void {

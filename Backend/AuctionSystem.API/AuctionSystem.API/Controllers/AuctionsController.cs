@@ -77,6 +77,19 @@ namespace AuctionSystem.API.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/cancel")]
+        public async Task<IActionResult> CancelAuction(int id, [FromBody] AuctionCancelDto cancelDto)
+        {
+            var errorResult = await _auctionService.CancelAuctionAsync(id, cancelDto.OwnerId);
+
+            if (errorResult != null)
+            {
+                return BadRequest(new { message = errorResult });
+            }
+
+            return Ok(new { message = "Aukcja została anulowana." });
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuction(int id)
         {

@@ -9,52 +9,64 @@
       <p>Wypełnij formularz, aby dodać ofertę do naszego katalogu</p>
     </div>
 
+    <div *ngIf="errors['general']" class="alert alert-danger">
+      {{ errors['general'] }}
+    </div>
+
     <form (ngSubmit)="onSubmit()" #auctionForm="ngForm">
       
       <div class="form-group full-width">
         <label for="title">Tytuł przedmiotu</label>
-        <div class="input-wrapper">
+        <div class="input-wrapper" [class.has-error]="errors['title']">
           <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-          <input type="text" id="title" name="title" [(ngModel)]="newAuction.title" class="form-control" placeholder="np. Smartfon Samsung Galaxy S23, Stan Idealny" required [disabled]="isSubmitting" />
+          <input type="text" id="title" name="title" [(ngModel)]="newAuction.title" class="form-control" placeholder="np. Smartfon Samsung Galaxy S23, Stan Idealny" [disabled]="isSubmitting" />
         </div>
+        <span *ngIf="errors['title']" class="error-msg">{{ errors['title'] }}</span>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="category">Kategoria</label>
-          <div class="select-wrapper">
-            <select id="category" name="category" [(ngModel)]="newAuction.category" class="form-control form-select" required [disabled]="isSubmitting">
+          <div class="select-wrapper" [class.has-error]="errors['category']">
+            <select id="category" name="category" [(ngModel)]="newAuction.category" class="form-control form-select" [disabled]="isSubmitting">
               <option value="" disabled selected>Wybierz kategorię</option>
               <option value="Elektronika">Elektronika</option>
               <option value="Moda">Moda</option>
+              <option value="Antyki">Antyki</option>
+              <option value="Sport">Sport</option>
+              <option value="Książki">Książki</option>
               <option value="Dom i Ogród">Dom i Ogród</option>
               <option value="Motoryzacja">Motoryzacja</option>
-              <option value="Książki">Książki</option>
+              <option value="Inne">Inne</option>
             </select>
             <svg class="select-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
           </div>
+          <span *ngIf="errors['category']" class="error-msg">{{ errors['category'] }}</span>
         </div>
 
-          <div class="form-group">
+        <div class="form-group">
           <label for="startingPrice">Cena wywoławcza (zł)</label>
-          <div class="input-wrapper">
+          <div class="input-wrapper" [class.has-error]="errors['startingPrice']">
             <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-            <input type="number" id="startingPrice" name="startingPrice" [(ngModel)]="newAuction.startingPrice" class="form-control" min="1" placeholder="0.00" required [disabled]="isSubmitting" />
+            <input type="number" id="startingPrice" name="startingPrice" [(ngModel)]="newAuction.startingPrice" class="form-control" min="1" placeholder="0.00" [disabled]="isSubmitting" />
           </div>
+          <span *ngIf="errors['startingPrice']" class="error-msg">{{ errors['startingPrice'] }}</span>
         </div>
       </div>
 
       <div class="form-group full-width">
         <label for="endDate">Data i godzina zakończenia</label>
-        <div class="input-wrapper">
+        <div class="input-wrapper" [class.has-error]="errors['endDate']">
           <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          <input type="datetime-local" id="endDate" name="endDate" [(ngModel)]="newAuction.endDate" class="form-control" required [disabled]="isSubmitting" />
+          <input type="datetime-local" id="endDate" name="endDate" [(ngModel)]="newAuction.endDate" class="form-control" [min]="minDate" [disabled]="isSubmitting" />
         </div>
+        <span *ngIf="errors['endDate']" class="error-msg">{{ errors['endDate'] }}</span>
       </div>
 
       <div class="form-group full-width">
         <label for="description">Opis przedmiotu</label>
-        <textarea id="description" name="description" [(ngModel)]="newAuction.description" class="form-control textarea" placeholder="Opisz dokładnie swój przedmiot, jego stan, wady i zalety..." [disabled]="isSubmitting"></textarea>
+        <textarea id="description" name="description" [(ngModel)]="newAuction.description" class="form-control textarea" [class.has-error]="errors['description']" placeholder="Opisz dokładnie swój przedmiot, jego stan, wady i zalety..." [disabled]="isSubmitting"></textarea>
+        <span *ngIf="errors['description']" class="error-msg">{{ errors['description'] }}</span>
       </div>
 
       <div class="form-group full-width">
@@ -82,7 +94,7 @@
       </div>
 
       <div class="actions-wrapper">
-        <button type="submit" class="btn-submit" [disabled]="auctionForm.invalid || isSubmitting">
+        <button type="submit" class="btn-submit" [disabled]="isSubmitting">
           <span *ngIf="!isSubmitting">Wystaw aukcję</span>
           <div *ngIf="isSubmitting" class="spinner"></div>
         </button>

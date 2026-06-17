@@ -93,7 +93,17 @@
         </button>
 
         <div *ngIf="auction.status !== 'Active'" class="alert alert-info">
-          Ta aukcja jest {{ auction.status | lowercase }}. Nie mozesz zlozyc oferty.
+          Ta aukcja jest zakończona. Nie mozesz zlozyc oferty.
+        </div>
+
+        <div *ngIf="isOwner && auction.status === 'Active'" class="owner-actions">
+          <button
+            (click)="cancelAuction()"
+            [disabled]="isCancelling"
+            class="btn-cancel"
+          >
+            {{ isCancelling ? 'Anulowanie...' : 'Anuluj aukcję' }}
+          </button>
         </div>
       </div>
     </div>

@@ -6,13 +6,12 @@ import { Subject } from 'rxjs';
 
 import { AuctionService } from '../../../core/services/auction.service';
 import { Auction } from '../../../shared/models/auction.model';
-  
-import { NgOptimizedImage } from '@angular/common';
+
 
 @Component({
   selector: 'app-auction-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NgOptimizedImage],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './auction-list.component.html',
   styleUrls: ['./auction-list.component.css']
 })
@@ -20,9 +19,12 @@ export class AuctionListComponent implements OnInit, OnDestroy {
   auctions: Auction[] = [];
   categories: string[] = [];
   statuses: string[] = [];
+  searchQuery: string = '';
+  filteredAuctions: Auction[] = [];
 
   selectedCategory: string = '';
   selectedStatus: string = '';
+  sortBy: string = '';
 
   isLoading = false;
   errorMessage = '';
@@ -49,11 +51,12 @@ export class AuctionListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.auctions = data;
+          this.applySearch();
           this.isLoading = false;
           this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('Błąd:', error);
+          console.error(error);
           this.errorMessage = 'Nie udało się pobrać aukcji.';
           this.isLoading = false;
           this.cdr.detectChanges();
@@ -61,16 +64,65 @@ export class AuctionListComponent implements OnInit, OnDestroy {
       });
   }
 
+  applySearch(): void {
+    const query = this.searchQuery.toLowerCase().trim();
+    let result = query
+      ? this.auctions.filter(a =>
+          a.title.toLowerCase().includes(query) ||
+          a.description.toLowerCase().includes(query) ||
+          a.category.toLowerCase().includes(query) ||
+          a.ownerUsername.toLowerCase().includes(query)
+        )
+      : [...this.auctions];
+
+    if (this.sortBy === 'price_asc') result.sort((a, b) => {
+      if (a.status === 'Active' && b.status !== 'Active') return -1;
+      if (a.status !== 'Active' && b.status === 'Active') return 1;
+      return a.currentPrice - b.currentPrice;
+    });
+    else if (this.sortBy === 'price_desc') result.sort((a, b) => {
+      if (a.status === 'Active' && b.status !== 'Active') return -1;
+      if (a.status !== 'Active' && b.status === 'Active') return 1;
+      return b.currentPrice - a.currentPrice;
+    });
+    else if (this.sortBy === 'ending_soon') result.sort((a, b) => {
+      if (a.status === 'Active' && b.status !== 'Active') return -1;
+      if (a.status !== 'Active' && b.status === 'Active') return 1;
+      return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+    });
+    else if (this.sortBy === 'newest') result.sort((a, b) => {
+      if (a.status === 'Active' && b.status !== 'Active') return -1;
+      if (a.status !== 'Active' && b.status === 'Active') return 1;
+      return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+    });
+    else result.sort((a, b) => {
+      if (a.status === 'Active' && b.status !== 'Active') return -1;
+      if (a.status !== 'Active' && b.status === 'Active') return 1;
+      return 0;
+    });
+
+    this.filteredAuctions = result;
+    this.cdr.detectChanges();
+  }
+
+  onSortChange(): void {
+    this.applySearch();
+  }
+
+  onSearchChange(): void {
+  this.applySearch();
+}
+
   onFilterChange(): void {
     this.loadAuctions();
   }
 
-getStatusClass(status: string): string {
+  getStatusClass(status: string): string {
     const statusMap: { [key: string]: string } = {
       'Active': 'status-active',
       'Ended': 'status-ended',
       'Cancelled': 'status-cancelled',
-      'Inactive': 'status-cancelled' // <--- Dodane: Nieaktywna dostanie szary kolor (taki jak anulowana)
+      'Inactive': 'status-cancelled'
     };
     return statusMap[status] || 'status-default';
   }
@@ -84,7 +136,7 @@ getStatusClass(status: string): string {
       'active': 'Aktywna',
       'ended': 'Zakończona',
       'cancelled': 'Anulowana',
-      'inactive': 'Nieaktywna' // <--- Dodane: Tłumaczenie dla Inactive
+      'inactive': 'Nieaktywna'
     };
     
     return dictionary[statusLower] || status; 
@@ -106,7 +158,6 @@ getStatusClass(status: string): string {
     return `${minutes}m`;
   }
 
-  // --- Dodana funkcja dla HTML ---
   isEndingSoon(endDate: string | Date): boolean {
     if (!endDate) return false;
     const end = new Date(endDate).getTime();
@@ -114,7 +165,6 @@ getStatusClass(status: string): string {
     const hoursLeft = (end - now) / (1000 * 60 * 60);
     return hoursLeft > 0 && hoursLeft <= 24;
   }
-  // -------------------------------
 
   getDefaultImage(category: string): string {
     const map: { [key: string]: string } = {

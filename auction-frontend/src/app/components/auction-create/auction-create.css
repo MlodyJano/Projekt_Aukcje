@@ -1,4 +1,3 @@
-/* --- ZMIENNE KOLORYSTYCZNE --- */
 :host {
   display: block;
   min-height: calc(100vh - 250px);
@@ -15,7 +14,6 @@
   --app-danger: #ef4444;
 }
 
-/* --- KONTENER GŁÓWNY --- */
 .create-wrapper {
   display: flex;
   justify-content: center;
@@ -23,7 +21,7 @@
 
 .create-container {
   width: 100%;
-  max-width: 650px; /* Szerszy dla formularza dwukolumnowego */
+  max-width: 650px;
   background: #ffffff;
   padding: 40px;
   border-radius: 16px;
@@ -31,7 +29,6 @@
   border: 1px solid #e5e7eb;
 }
 
-/* --- HEADER --- */
 .create-header {
   text-align: center;
   margin-bottom: 32px;
@@ -64,7 +61,6 @@
   font-size: 0.95rem;
 }
 
-/* --- FORMULARZ (GRID) --- */
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -87,7 +83,6 @@
   font-size: 0.9rem;
 }
 
-/* --- INPUTY --- */
 .input-wrapper {
   position: relative;
   display: flex;
@@ -104,7 +99,7 @@
 
 .form-control {
   width: 100%;
-  padding: 12px 16px 12px 42px; /* Miejsce na ikonę */
+  padding: 12px 16px 12px 42px; 
   border: 1px solid var(--app-border);
   border-radius: 8px;
   font-size: 0.95rem;
@@ -115,7 +110,6 @@
   font-family: inherit;
 }
 
-/* Wyjątek dla Selectów i Textarea, które mogą nie mieć ikon z lewej */
 .form-select {
   padding-left: 16px;
   padding-right: 40px;
@@ -142,7 +136,6 @@
   resize: vertical;
 }
 
-/* Efekty Focus */
 .form-control:focus {
   background-color: #ffffff;
   border-color: var(--app-green);
@@ -160,7 +153,6 @@
   cursor: not-allowed;
 }
 
-/* --- DRAG & DROP (Plik) --- */
 .file-input-hidden {
   display: none;
 }
@@ -208,7 +200,6 @@
   font-size: 0.8rem;
 }
 
-/* Podgląd zdjęcia */
 .image-preview-container {
   display: block;
   width: 100%;
@@ -245,7 +236,6 @@
   opacity: 1;
 }
 
-/* --- AKCJE I PRZYCISKI --- */
 .actions-wrapper {
   margin-top: 32px;
   display: flex;
@@ -287,7 +277,6 @@
   opacity: 0.7;
 }
 
-/* Animacja Ładowania */
 .spinner {
   width: 20px;
   height: 20px;
@@ -299,7 +288,6 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Link Anuluj */
 .link-cancel {
   display: inline-flex;
   align-items: center;
@@ -322,9 +310,31 @@
   pointer-events: none;
 }
 
-/* --- RWD (Telefony) --- */
 @media (max-width: 600px) {
   .form-row { grid-template-columns: 1fr; gap: 0; }
   .create-container { padding: 30px 20px; }
   :host { padding: 20px 16px; }
+}
+
+.error-msg {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
+
+.has-error .form-control,
+.has-error.form-control {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.alert-danger {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }

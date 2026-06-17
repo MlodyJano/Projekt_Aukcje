@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="header">
+    <h1>Moje licytacje</h1>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Ladowanie...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && bids.length === 0" class="no-data">
+    <p>Nie uczestniczyles jeszcze w zadnej licytacji.</p>
+  </div>
+
+  <div *ngIf="!isLoading && bids.length > 0" class="auctions-grid">
+    <div *ngFor="let bid of bids" class="auction-card">
+      <div class="card-image-container">
+        <img
+        [src]="bid.auctionImagePath ? 'http://localhost:5026' + bid.auctionImagePath : getDefaultImage(bid.auctionCategory)"          alt="{{ bid.auctionTitle }}"
+        class="auction-image"
+        />
+      </div>
+
+      <div class="card-body">
+        <small class="category">{{ bid.auctionCategory }}</small>
+        <h3>{{ bid.auctionTitle }}</h3>
+
+        <div class="price-row">
+          <div>
+            <span class="price-label">Twoja oferta</span>
+            <span class="price">{{ bid.amount | number:'1.2-2' }} zl</span>
+          </div>
+          <div class="text-right">
+            <span class="price-label">Czas</span>
+            <span class="price-min">{{ bid.bidTime | date:'short' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button [routerLink]="['/auctions', bid.auctionId]" class="btn-action">
+          Przejdz do aukcji
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

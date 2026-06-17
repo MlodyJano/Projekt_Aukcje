@@ -16,9 +16,17 @@ namespace AuctionSystem.API.Repositories
         public async Task<IEnumerable<Bid>> GetBidsByAuctionIdAsync(int auctionId)
         {
             return await _context.Bids
-                .Include(b => b.Bidder) // Dołączamy dane licytującego (użytkownika)
+                .Include(b => b.Bidder)
                 .Where(b => b.AuctionId == auctionId)
-                .OrderByDescending(b => b.Amount) // Sortujemy: najwyższe oferty jako pierwsze
+                .OrderByDescending(b => b.BidTime)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Bid>> GetBidsByUserIdAsync(int userId)
+        {
+            return await _context.Bids
+                .Include(b => b.Auction)
+                .Where(b => b.BidderId == userId)
+                .OrderByDescending(b => b.BidTime)
                 .ToListAsync();
         }
 

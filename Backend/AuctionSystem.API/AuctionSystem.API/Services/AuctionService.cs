@@ -15,7 +15,20 @@ namespace AuctionSystem.API.Services
 
         public async Task<IEnumerable<AuctionDto>> GetAuctionsAsync(string? category, string? status)
         {
-            var auctions = await _auctionRepository.GetAuctionsAsync(category, status);
+            var auctions = await _auctionRepository.GetAuctionsAsync(category);
+
+            await RefreshExpiredStatusesAsync(auctions);
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                auctions = auctions.Where(a => a.Status.ToLower() == status.ToLower());
+            }
+
+            // Kolejność: Active (najkrótszy czas do końca najpierw), potem Ended, na samym końcu Cancelled
+            auctions = auctions
+                .OrderBy(a => GetStatusSortOrder(a.Status))
+                .ThenBy(a => a.EndDate);
+
             return auctions.Select(a => new AuctionDto
             {
                 Id = a.Id,
@@ -33,10 +46,20 @@ namespace AuctionSystem.API.Services
             });
         }
 
+        private static int GetStatusSortOrder(string status)
+        {
+            if (string.Equals(status, "Active", StringComparison.OrdinalIgnoreCase)) return 0;
+            if (string.Equals(status, "Ended", StringComparison.OrdinalIgnoreCase)) return 1;
+            if (string.Equals(status, "Cancelled", StringComparison.OrdinalIgnoreCase)) return 2;
+            return 3;
+        }
+
         public async Task<AuctionDto?> GetAuctionByIdAsync(int id)
         {
             var a = await _auctionRepository.GetAuctionByIdAsync(id);
             if (a == null) return null;
+
+            await RefreshExpiredStatusesAsync(new[] { a });
 
             return new AuctionDto
             {
@@ -119,6 +142,56 @@ namespace AuctionSystem.API.Services
             auction.ImagePath = imagePath;
             await _auctionRepository.UpdateAuctionAsync(auction);
             return await _auctionRepository.SaveChangesAsync();
+        }
+
+        public async Task<string?> CancelAuctionAsync(int id, int ownerId)
+        {
+            var auction = await _auctionRepository.GetAuctionByIdAsync(id);
+            if (auction == null) return "Aukcja nie istnieje.";
+
+            // Najpierw sprawdzamy, czy aukcja nie zakończyła się już sama z powodu upływu czasu
+            await RefreshExpiredStatusesAsync(new[] { auction });
+
+            if (auction.OwnerId != ownerId)
+            {
+                return "Nie możesz anulować aukcji, której nie jesteś właścicielem.";
+            }
+
+            if (!string.Equals(auction.Status, "Active", StringComparison.OrdinalIgnoreCase))
+            {
+                return "Można anulować tylko aktywną aukcję.";
+            }
+
+            auction.Status = "Cancelled";
+            await _auctionRepository.UpdateAuctionAsync(auction);
+            await _auctionRepository.SaveChangesAsync();
+
+            return null; // Brak błędów oznacza sukces
+        }
+
+        // Aukcje, których czas minął, a wciąż mają status "Active", automatycznie
+        // przechodzą na "Ended". Zwraca true, jeśli cokolwiek zostało zmienione.
+        private async Task<bool> RefreshExpiredStatusesAsync(IEnumerable<Auction> auctions)
+        {
+            var changed = false;
+
+            foreach (var auction in auctions)
+            {
+                if (string.Equals(auction.Status, "Active", StringComparison.OrdinalIgnoreCase)
+                    && auction.EndDate < DateTime.Now)
+                {
+                    auction.Status = "Ended";
+                    await _auctionRepository.UpdateAuctionAsync(auction);
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                await _auctionRepository.SaveChangesAsync();
+            }
+
+            return changed;
         }
     }
 }

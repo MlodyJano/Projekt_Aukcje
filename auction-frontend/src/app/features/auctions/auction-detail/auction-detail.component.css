@@ -191,6 +191,36 @@
   cursor: not-allowed;
 }
 
+.owner-actions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--c-border);
+}
+
+.btn-cancel {
+  width: 100%;
+  padding: 13px;
+  background: var(--c-white);
+  color: var(--c-danger);
+  border: 1.5px solid var(--c-danger);
+  border-radius: var(--r-sm);
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: var(--c-danger);
+  color: var(--c-white);
+}
+
+.btn-cancel:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
 /* Bids section (historia) */
 .bids-section {
   padding: 24px 32px 28px;

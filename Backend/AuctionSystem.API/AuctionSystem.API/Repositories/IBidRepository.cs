@@ -7,5 +7,6 @@ namespace AuctionSystem.API.Repositories
         Task<IEnumerable<Bid>> GetBidsByAuctionIdAsync(int auctionId);
         Task AddBidAsync(Bid bid);
         Task<bool> SaveChangesAsync();
+        Task<IEnumerable<Bid>> GetBidsByUserIdAsync(int userId);
     }
 }

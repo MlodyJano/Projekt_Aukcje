@@ -4,7 +4,7 @@ namespace AuctionSystem.API.Repositories
 {
     public interface IAuctionRepository
     {
-        Task<IEnumerable<Auction>> GetAuctionsAsync(string? category, string? status);
+        Task<IEnumerable<Auction>> GetAuctionsAsync(string? category);
         Task<Auction?> GetAuctionByIdAsync(int id);
         Task AddAuctionAsync(Auction auction);
         Task UpdateAuctionAsync(Auction auction);

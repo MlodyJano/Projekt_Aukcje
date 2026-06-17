@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuctionSystem.API.Controllers
 {
     [ApiController]
-    [Route("api/auctions/{auctionId}/[controller]")] // Generuje ścieżkę: api/auctions/{auctionId}/bids
+    [Route("api/auctions/{auctionId}/bids")]
     public class BidsController : ControllerBase
     {
         private readonly IBidService _bidService;
@@ -15,8 +15,6 @@ namespace AuctionSystem.API.Controllers
             _bidService = bidService;
         }
 
-        // GET: api/auctions/{auctionId}/bids
-        // Pobiera historię wszystkich ofert dla danej aukcji
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BidDto>>> GetBids([FromRoute] int auctionId)
         {
@@ -24,8 +22,6 @@ namespace AuctionSystem.API.Controllers
             return Ok(bids);
         }
 
-        // POST: api/auctions/{auctionId}/bids
-        // Składa nową ofertę w licytacji
         [HttpPost]
         public async Task<IActionResult> PlaceBid([FromRoute] int auctionId, [FromBody] BidCreateDto bidCreateDto)
         {

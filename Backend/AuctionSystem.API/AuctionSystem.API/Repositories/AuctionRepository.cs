@@ -13,21 +13,13 @@ namespace AuctionSystem.API.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Auction>> GetAuctionsAsync(string? category, string? status)
+        public async Task<IEnumerable<Auction>> GetAuctionsAsync(string? category)
         {
-            // Budujemy zapytanie (IQueryable), dołączając od razu dane właściciela aukcji (.Include)
             IQueryable<Auction> query = _context.Auctions.Include(a => a.Owner);
 
-            // Jeśli użytkownik podał kategorię, filtrujemy po niej w bazie danych
             if (!string.IsNullOrEmpty(category))
             {
                 query = query.Where(a => a.Category.ToLower() == category.ToLower());
-            }
-
-            // Jeśli podał status (np. Active / Finished), również filtrujemy
-            if (!string.IsNullOrEmpty(status))
-            {
-                query = query.Where(a => a.Status.ToLower() == status.ToLower());
             }
 
             return await query.ToListAsync();

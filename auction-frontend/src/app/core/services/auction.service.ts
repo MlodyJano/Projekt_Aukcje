@@ -36,8 +36,12 @@ export class AuctionService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
+  cancelAuction(id: number, ownerId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/cancel`, { ownerId });
+  }
+
   getCategories(): string[] {
-    return ['Elektronika', 'Moda', 'Antyki', 'Sport', 'Książki', 'Inne'];
+    return ['Elektronika', 'Moda', 'Antyki', 'Sport', 'Książki', 'Dom i Ogród', 'Motoryzacja','Inne'];
   }
 
   getStatuses(): string[] {

@@ -10,5 +10,6 @@ namespace AuctionSystem.API.Services
         Task<bool> UpdateAuctionAsync(int id, AuctionCreateDto updateDto);
         Task<bool> DeleteAuctionAsync(int id);
         Task<bool> UpdateImagePathAsync(int id, string imagePath);
+        Task<string?> CancelAuctionAsync(int id, int ownerId);
     }
 }
