@@ -1,49 +1,76 @@
-<div class="container">
+<div class="page-container">
+  
   <div class="header-section">
-    <h2>Aktualne Aukcje</h2>
+    <div class="header-titles">
+      <h2>Aktualne Aukcje</h2>
+      <p class="subtitle">Licytuj i wygrywaj najlepsze okazje</p>
+    </div>
     
     <div class="filter-box">
-      <label for="categoryFilter">Filtruj po kategorii: </label>
-      <select id="categoryFilter" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
-        <option value="">Wszystkie kategorie</option>
-        <option value="Elektronika">Elektronika</option>
-        <option value="Moda">Moda</option>
-        <option value="Dom i Ogród">Dom i Ogród</option>
-        <option value="Motoryzacja">Motoryzacja</option>
-        <option value="Książki">Książki</option>
-      </select>
+      <label for="categoryFilter">Kategoria</label>
+      <div class="select-wrapper">
+        <select id="categoryFilter" [(ngModel)]="selectedCategory" (change)="onCategoryChange()" class="custom-select">
+          <option value="">Wszystkie kategorie</option>
+          <option value="Elektronika">Elektronika</option>
+          <option value="Moda">Moda</option>
+          <option value="Dom i Ogród">Dom i Ogród</option>
+          <option value="Motoryzacja">Motoryzacja</option>
+          <option value="Książki">Książki</option>
+        </select>
+        <svg class="select-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
     </div>
   </div>
   
   <div *ngIf="auctions.length === 0" class="no-auctions">
-    Brak aktywnych aukcji w tej kategorii.
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+    <h3>Brak aktywnych aukcji</h3>
+    <p>Spróbuj zmienić kategorię lub zajrzyj tu później.</p>
   </div>
 
-  <div class="auction-grid">
+  <div *ngIf="auctions.length > 0" class="auction-grid">
     <div *ngFor="let auction of auctions" class="auction-card">
-      <h3>{{ auction.title }}</h3>
-      <span class="category-badge">{{ auction.category }}</span>
-      <p class="description">{{ auction.description }}</p>
       
-      <hr class="separator">
+      <div class="card-header">
+        <span class="category-badge">{{ auction.category }}</span>
+      </div>
+
+      <div class="card-body">
+        <h3 class="auction-title">{{ auction.title }}</h3>
+        <p class="description">{{ auction.description }}</p>
+      </div>
+      
+      <div class="divider"></div>
       
       <div class="price-section">
-        <p>Cena wywoławcza: <strong>{{ auction.startingPrice }} zł</strong></p>
-        <p class="current-price">Aktualna cena: <strong>{{ auction.currentPrice }} zł</strong></p>
+        <div class="price-item starting">
+          <span class="price-label">Cena wywoławcza</span>
+          <span class="price-value">{{ auction.startingPrice }} zł</span>
+        </div>
+        <div class="price-item current">
+          <span class="price-label">Aktualna cena</span>
+          <span class="price-value highlight">{{ auction.currentPrice }} zł</span>
+        </div>
       </div>
 
       <button class="bid-button" (click)="onBid(auction.id, auction.currentPrice)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 13l-4 4"></path><path d="M17 10l-4-4"></path><path d="M21 7l-3-3a1.4 1.4 0 0 0-2 0l-9 9a1.4 1.4 0 0 0 0 2l3 3a1.4 1.4 0 0 0 2 0l9-9a1.4 1.4 0 0 0 0-2z"></path><path d="M3 21h7"></path></svg>
         Podbij ofertę (+10 zł)
       </button>
 
       <div class="bids-history" *ngIf="auction.bids && auction.bids.length > 0">
-        <h4>Historia licytacji:</h4>
-        <ul>
-          <li *ngFor="let bid of auction.bids">
-            <strong>{{ bid.bidderName }}</strong> zalicytował za <strong>{{ bid.amount }} zł</strong>
+        <h4><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Ostatnie oferty</h4>
+        <ul class="bids-list">
+          <li *ngFor="let bid of auction.bids" class="bid-item">
+            <div class="bidder-info">
+              <span class="bidder-avatar">{{ bid.bidderName.charAt(0) | uppercase }}</span>
+              <span class="bidder-name">{{ bid.bidderName }}</span>
+            </div>
+            <span class="bid-amount">{{ bid.amount }} zł</span>
           </li>
         </ul>
       </div>
+
     </div>
   </div>
 </div>
