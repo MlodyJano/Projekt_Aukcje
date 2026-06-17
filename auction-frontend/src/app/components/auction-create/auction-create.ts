@@ -21,6 +21,10 @@ export class AuctionCreateComponent implements OnInit {
     ownerId: 0
   };
 
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
+  isSubmitting = false;
+
   constructor(private auctionService: AuctionService, private router: Router) {}
 
   ngOnInit(): void {
@@ -32,11 +36,26 @@ export class AuctionCreateComponent implements OnInit {
     this.newAuction.ownerId = parseInt(savedId, 10);
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    this.selectedFile = input.files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(this.selectedFile);
+  }
+
   onSubmit(): void {
     if (!this.newAuction.title || !this.newAuction.endDate || !this.newAuction.category) {
       alert('Tytuł, kategoria i data zakończenia są wymagane!');
       return;
     }
+
+    this.isSubmitting = true;
 
     const formattedData = {
       ...this.newAuction,
@@ -44,12 +63,19 @@ export class AuctionCreateComponent implements OnInit {
     };
 
     this.auctionService.createAuction(formattedData).subscribe({
-      next: () => {
-        this.router.navigate(['/auctions']);
+      next: (auction) => {
+        if (this.selectedFile) {
+          this.auctionService.uploadImage(auction.id, this.selectedFile).subscribe({
+            next: () => this.router.navigate(['/auctions']),
+            error: () => this.router.navigate(['/auctions'])
+          });
+        } else {
+          this.router.navigate(['/auctions']);
+        }
       },
-      error: (err: any) => {
-        console.error(err);
+      error: () => {
         alert('Nie udało się dodać aukcji.');
+        this.isSubmitting = false;
       }
     });
   }

@@ -156,6 +156,19 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
     return `${minutes}m`;
   }
 
+  getDefaultImage(category: string): string {
+    const map: { [key: string]: string } = {
+      'Elektronika': 'categories/elektronika.png',
+      'Moda': 'categories/moda.png',
+      'Dom i Ogród': 'categories/dom.png',
+      'Motoryzacja': 'categories/motoryzacja.png',
+      'Książki': 'categories/ksiazki.png',
+      'Antyki': 'categories/antyki.png',
+      'Sport': 'categories/sport.png'
+    };
+    return map[category] || 'categories/inne.png';
+  }
+
   goBack(): void {
     this.router.navigate(['/auctions']);
   }

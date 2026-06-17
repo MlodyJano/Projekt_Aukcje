@@ -57,6 +57,14 @@
       </div>
 
       <div class="card-body">
+        <div class="image-container" style="position: relative; width: 100%; height: 200px;">
+          <img
+            [ngSrc]="auction.imagePath ? 'http://localhost:5026' + auction.imagePath : getDefaultImage(auction.category)"
+            [alt]="auction.title"
+            fill
+            style="object-fit: cover;"
+          />
+        </div>
         <p class="description">{{ auction.description }}</p>
 
         <div class="info-row">

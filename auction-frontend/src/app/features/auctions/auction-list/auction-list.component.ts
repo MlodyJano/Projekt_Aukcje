@@ -6,11 +6,13 @@ import { Subject } from 'rxjs';
 
 import { AuctionService } from '../../../core/services/auction.service';
 import { Auction } from '../../../shared/models/auction.model';
+  
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-auction-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NgOptimizedImage],
   templateUrl: './auction-list.component.html',
   styleUrls: ['./auction-list.component.css']
 })
@@ -86,6 +88,18 @@ export class AuctionListComponent implements OnInit, OnDestroy {
     if (days > 0) return `${days}d ${hours}h`;
     if (hours > 0) return `${hours}h ${minutes}m`;
     return `${minutes}m`;
+  }
+  getDefaultImage(category: string): string {
+    const map: { [key: string]: string } = {
+      'Elektronika': 'categories/elektronika.png',
+      'Moda': 'categories/moda.png',
+      'Dom i Ogród': 'categories/dom.png',
+      'Motoryzacja': 'categories/motoryzacja.png',
+      'Książki': 'categories/ksiazki.png',
+      'Antyki': 'categories/antyki.png',
+      'Sport': 'categories/sport.png'
+    };
+    return map[category] || 'categories/inne.png';
   }
 
   ngOnDestroy(): void {

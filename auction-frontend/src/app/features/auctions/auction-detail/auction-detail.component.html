@@ -18,6 +18,13 @@
         {{ auction.status }}
       </span>
     </div>
+    <div class="image-container">
+          <img
+            [src]="auction.imagePath ? 'http://localhost:5026' + auction.imagePath : getDefaultImage(auction.category)"
+            alt="{{ auction.title }}"
+            class="auction-image"
+          />
+        </div>
 
     <div class="detail-grid">
       <div class="info-section">

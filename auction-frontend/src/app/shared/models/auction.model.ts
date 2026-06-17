@@ -10,4 +10,5 @@ export interface Auction {
   status: string;
   ownerId: number;
   ownerUsername: string;
+  imagePath?: string;
 }

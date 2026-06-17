@@ -2,15 +2,14 @@ using AuctionSystem.API.Data;
 using AuctionSystem.API.Repositories;
 using AuctionSystem.API.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Konfiguracja bazy danych SQLite
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite("Data Source=auctions.db"));
 
-// 2. Rejestracja warstwy repozytoriów i serwisów (Dependency Injection)
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
@@ -18,18 +17,16 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<IBidService, BidService>();
 
-// 3. Konfiguracja polityki CORS dla Angulara
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") // Adres aplikacji Angular
+        policy.WithOrigins("http://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
-// 4. Konfiguracja kontrolerów i formatowania JSON (CamelCase dla Angulara)
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -37,20 +34,16 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 
-// 5. Konfiguracja OpenAPI (Swagger/Scalar)
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Automatyczne tworzenie bazy danych i aplikowanie migracji przy starcie serwera
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<DataContext>();
-    context.Database.EnsureCreated(); // To fizycznie utworzy plik auctions.db i tabele!
+    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+    context.Database.EnsureCreated();
 }
 
-// 6. Konfiguracja potoku ¿¹dañ HTTP (Middleware)
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -62,20 +55,36 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-// URUCHOMIENIE CORS (Nazwa zgodna z zarejestrowan¹ polityk¹ "AllowAngular")
 app.UseCors("AllowAngular");
 
-app.UseAuthorization();
+var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
+Directory.CreateDirectory(uploadsPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
+});
 
+app.UseAuthorization();
 app.MapControllers();
 
-// Seed przyk³adowych danych jeœli baza jest pusta (u³atwia rozwój frontendu)
 using (var scope = app.Services.CreateScope())
 {
     try
     {
         var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+
+        if (!context.Users.Any())
+        {
+            context.Users.Add(new AuctionSystem.API.Models.User
+            {
+                Username = "admin",
+                Email = "admin@auction.pl",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
+                CreatedAt = DateTime.UtcNow
+            });
+            context.SaveChanges();
+        }
 
         if (!context.Auctions.Any())
         {
@@ -85,7 +94,7 @@ using (var scope = app.Services.CreateScope())
                 new AuctionSystem.API.Models.Auction
                 {
                     Title = "Smartfon testowy",
-                    Description = "Telefon do testów",
+                    Description = "Telefon do testÃ³w",
                     Category = "Elektronika",
                     StartingPrice = 100,
                     CurrentPrice = 100,
@@ -95,9 +104,9 @@ using (var scope = app.Services.CreateScope())
                 },
                 new AuctionSystem.API.Models.Auction
                 {
-                    Title = "Ksi¹¿ka programistyczna",
+                    Title = "KsiÄ…Å¼ka programistyczna",
                     Description = "Nauka C#",
-                    Category = "Ksi¹¿ki",
+                    Category = "KsiÄ…Å¼ki",
                     StartingPrice = 25,
                     CurrentPrice = 25,
                     StartDate = DateTime.UtcNow,
@@ -105,21 +114,19 @@ using (var scope = app.Services.CreateScope())
                     OwnerId = ownerId
                 }
             );
-
             context.SaveChanges();
         }
     }
     catch (Exception ex)
     {
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "B³¹d seedowania");
+        logger.LogError(ex, "BÅ‚Ä…d seedowania");
     }
 }
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-
     Console.WriteLine($"Users: {context.Users.Count()}");
     Console.WriteLine($"Auctions: {context.Auctions.Count()}");
     Console.WriteLine($"Bids: {context.Bids.Count()}");

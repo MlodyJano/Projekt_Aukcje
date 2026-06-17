@@ -28,7 +28,8 @@ namespace AuctionSystem.API.Services
                 EndDate = a.EndDate,
                 Status = a.Status,
                 OwnerId = a.OwnerId,
-                OwnerUsername = a.Owner != null ? a.Owner.Username : "Nieznany"
+                OwnerUsername = a.Owner != null ? a.Owner.Username : "Nieznany",
+                ImagePath = a.ImagePath
             });
         }
 
@@ -49,7 +50,8 @@ namespace AuctionSystem.API.Services
                 EndDate = a.EndDate,
                 Status = a.Status,
                 OwnerId = a.OwnerId,
-                OwnerUsername = a.Owner != null ? a.Owner.Username : "Nieznany"
+                OwnerUsername = a.Owner != null ? a.Owner.Username : "Nieznany",
+                ImagePath = a.ImagePath
             };
         }
 
@@ -61,7 +63,7 @@ namespace AuctionSystem.API.Services
                 Description = createDto.Description,
                 Category = createDto.Category,
                 StartingPrice = createDto.StartingPrice,
-                CurrentPrice = createDto.StartingPrice, // Na starcie cena aktualna to cena wywoławcza
+                CurrentPrice = createDto.StartingPrice,
                 EndDate = createDto.EndDate,
                 OwnerId = createDto.OwnerId
             };
@@ -80,7 +82,8 @@ namespace AuctionSystem.API.Services
                 StartDate = auction.StartDate,
                 EndDate = auction.EndDate,
                 Status = auction.Status,
-                OwnerId = auction.OwnerId
+                OwnerId = auction.OwnerId,
+                ImagePath = auction.ImagePath
             };
         }
 
@@ -105,6 +108,16 @@ namespace AuctionSystem.API.Services
             if (auction == null) return false;
 
             await _auctionRepository.DeleteAuctionAsync(auction);
+            return await _auctionRepository.SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateImagePathAsync(int id, string imagePath)
+        {
+            var auction = await _auctionRepository.GetAuctionByIdAsync(id);
+            if (auction == null) return false;
+
+            auction.ImagePath = imagePath;
+            await _auctionRepository.UpdateAuctionAsync(auction);
             return await _auctionRepository.SaveChangesAsync();
         }
     }
