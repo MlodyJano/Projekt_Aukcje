@@ -1,36 +1,335 @@
+/* --- ZMIENNE KOLORYSTYCZNE --- */
+:host {
+  display: block;
+  font-family: 'Inter', system-ui, sans-serif;
+  
+  --app-green: #15803d;
+  --app-green-hover: #166534;
+  --app-green-light: #f0fdf4;
+  --app-text: #1f2937;
+  --app-muted: #6b7280;
+  --app-border: #e5e7eb;
+  --app-bg: #f9fafb;
+}
+
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* --- NAGŁÓWEK I FILTRY --- */
 .header-section {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  align-items: flex-end;
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border: 1px solid var(--app-border);
+  margin-bottom: 40px;
+  gap: 20px;
 }
 
-.header-section h2 {
+.header-titles h2 {
+  margin: 0 0 8px 0;
+  color: var(--app-text);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.header-titles .subtitle {
   margin: 0;
+  color: var(--app-muted);
+  font-size: 1rem;
+}
+
+.filter-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 250px;
 }
 
 .filter-box label {
-  font-weight: bold;
-  color: #555;
+  font-weight: 600;
+  color: var(--app-text);
+  font-size: 0.85rem;
 }
 
-.filter-box select {
-  padding: 6px 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background: #fff;
+.select-wrapper {
+  position: relative;
 }
 
+.custom-select {
+  width: 100%;
+  appearance: none;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-select:hover { border-color: #d1d5db; }
+.custom-select:focus {
+  outline: none;
+  border-color: var(--app-green);
+  background: white;
+  box-shadow: 0 0 0 4px var(--app-green-light);
+}
+
+.select-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--app-muted);
+  pointer-events: none;
+}
+
+/* --- EMPTY STATE --- */
+.no-auctions {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+  color: var(--app-muted);
+  margin-top: 20px;
+}
+
+.no-auctions svg { color: #94a3b8; margin-bottom: 16px; }
+.no-auctions h3 { color: var(--app-text); font-size: 1.2rem; margin: 0 0 8px; }
+
+/* --- SIATKA AUKCJI --- */
+.auction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* --- KARTA AUKCJI --- */
+.auction-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--app-border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.auction-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1), 0 8px 10px -5px rgba(0,0,0,0.05);
+  border-color: #d1d5db;
+}
+
+/* Badge (Zamieniony z fioletowego na nowoczesny szaro-zielony) */
 .category-badge {
   display: inline-block;
-  background-color: #e0aaff;
-  color: #3c096c;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: bold;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  border: 1px solid var(--app-border);
+}
+
+/* Treść główna */
+.auction-title {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: var(--app-text);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.description {
+  color: var(--app-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1; /* Pcha resztę elementów na dół */
+}
+
+.divider {
+  height: 1px;
+  background: var(--app-border);
+  margin: 0 -24px 20px; /* Rozciąga linię na pełną szerokość karty */
+}
+
+/* Sekcja Cenowa */
+.price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.price-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-label {
+  font-size: 0.75rem;
+  color: var(--app-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.starting .price-value {
+  font-size: 1rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.current {
+  text-align: right;
+}
+
+.current .highlight {
+  font-size: 1.5rem;
+  color: var(--app-green);
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Przycisk Podbijania */
+.bid-button {
+  width: 100%;
+  background: var(--app-green);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2);
+}
+
+.bid-button:hover {
+  background: var(--app-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(21, 128, 61, 0.3);
+}
+
+.bid-button:active {
+  transform: translateY(0);
+}
+
+/* Historia Licytacji (Mini-Feed) */
+.bids-history {
+  margin-top: 24px;
+  background: var(--app-bg);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--app-border);
+}
+
+.bids-history h4 {
+  margin: 0 0 12px 0;
+  font-size: 0.85rem;
+  color: var(--app-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bids-history h4 svg { color: var(--app-green); }
+
+.bids-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 140px;
+  overflow-y: auto;
+  padding-right: 4px; /* Miejsce na scrollbar */
+}
+
+/* Customowy Scrollbar dla historii */
+.bids-list::-webkit-scrollbar { width: 4px; }
+.bids-list::-webkit-scrollbar-track { background: transparent; }
+.bids-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+.bid-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--app-border);
+}
+
+.bid-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.bidder-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bidder-avatar {
+  width: 24px;
+  height: 24px;
+  background: #e2e8f0;
+  color: #475569;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.bidder-name {
+  color: var(--app-text);
+  font-weight: 500;
+}
+
+.bid-amount {
+  color: var(--app-green);
+  font-weight: 700;
+}
+
+/* --- RWD (Mobile) --- */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filter-box { width: 100%; }
 }

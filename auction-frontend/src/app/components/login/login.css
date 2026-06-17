@@ -1,121 +1,233 @@
+/* --- ZMIENNE KOLORYSTYCZNE --- */
+:host {
+  display: block;
+  /* Centrowanie kontenera na stronie, jeśli jest on jedynym elementem na widoku */
+  min-height: calc(100vh - 250px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f3f4f6; /* Jasne tło, by biały formularz się wyróżniał */
+  font-family: 'Inter', system-ui, sans-serif;
+  
+  --app-green: #15803d;
+  --app-green-hover: #166534;
+  --app-green-light: #f0fdf4;
+  --app-text: #1f2937;
+  --app-muted: #6b7280;
+  --app-border: #d1d5db;
+  --app-danger: #ef4444;
+  --app-danger-bg: #fef2f2;
+}
+
+/* --- KONTENER GŁÓWNY --- */
 .login-container {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  font-family: sans-serif;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+  border: 1px solid #e5e7eb;
 }
 
-.login-container h2 {
-  margin-top: 0;
-  color: #333;
+/* --- HEADER --- */
+.login-header {
   text-align: center;
+  margin-bottom: 32px;
 }
 
-.error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  border: 1px solid #f5c6cb;
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  background-color: var(--app-green-light);
+  color: var(--app-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 6px rgba(21, 128, 61, 0.1);
 }
 
+.login-header h2 {
+  margin: 0 0 8px 0;
+  color: var(--app-text);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.login-header p {
+  margin: 0;
+  color: var(--app-muted);
+  font-size: 0.95rem;
+}
+
+/* --- KOMUNIKAT BŁĘDU --- */
+.alert-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--app-danger-bg);
+  color: var(--app-danger);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border: 1px solid #fca5a5;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* --- FORMULARZ --- */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  color: #555;
-  font-weight: bold;
-  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--app-text);
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.form-group input {
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: #9ca3af;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.input-wrapper input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  padding: 12px 16px 12px 42px; /* Miejsce na ikonę */
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--app-text);
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
-.form-group input:disabled {
-  background-color: #f5f5f5;
+/* Efekty Focus */
+.input-wrapper input:focus {
+  background-color: #ffffff;
+  border-color: var(--app-green);
+  box-shadow: 0 0 0 4px var(--app-green-light);
+}
+
+.input-wrapper input:focus + .input-icon, /* Kiedy input ma focus, ikona robi się zielona (jeśli zmienisz kolejność w HTML) */
+.input-wrapper:focus-within .input-icon {
+  color: var(--app-green);
+}
+
+.input-wrapper input:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
   cursor: not-allowed;
 }
 
-.button-group {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
+/* --- GŁÓWNY PRZYCISK --- */
 .btn-submit {
-  flex: 1;
-  background: #7b2cbf;
+  width: 100%;
+  background: var(--app-green);
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
-  min-width: 80px;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2);
 }
 
 .btn-submit:hover:not(:disabled) {
-  background: #6a23a3;
+  background: var(--app-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(21, 128, 61, 0.3);
 }
 
 .btn-submit:disabled {
-  background: #999;
+  background: #9ca3af;
+  box-shadow: none;
   cursor: not-allowed;
+  transform: none;
 }
 
-.btn-cancel {
-  flex: 1;
-  background: #e0e0e0;
-  color: #333;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  min-width: 80px;
+/* --- ANIMACJA ŁADOWANIA --- */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
 }
 
-.btn-cancel:hover:not(:disabled) {
-  background: #d5d5d5;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.btn-cancel:disabled {
-  background: #f5f5f5;
-  color: #999;
-  cursor: not-allowed;
+/* --- DODATKOWE LINKI --- */
+.additional-actions {
+  margin-top: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.btn-register {
-  flex: 1;
-  background: #17a2b8;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  min-width: 80px;
+.register-text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--app-muted);
 }
 
-.btn-register:hover:not(:disabled) {
-  background: #138496;
+.link-register {
+  color: var(--app-green);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-.btn-register:disabled {
-  background: #999;
-  cursor: not-allowed;
+.link-register:hover {
+  color: var(--app-green-hover);
+  text-decoration: underline;
+}
+
+.link-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--app-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.link-cancel:hover {
+  color: var(--app-text);
+}
+
+/* --- RWD (Mobile) --- */
+@media (max-width: 480px) {
+  .login-container { padding: 30px 20px; }
+  :host { padding: 20px 16px; }
 }

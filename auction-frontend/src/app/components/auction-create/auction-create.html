@@ -1,50 +1,98 @@
-<div class="form-container">
-  <h2>Wystaw nowy przedmiot na aukcję</h2>
-  
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="title">Tytuł przedmiotu:</label>
-      <input type="text" id="title" name="title" [(ngModel)]="newAuction.title" required />
+<div class="create-wrapper">
+  <div class="create-container">
+    
+    <div class="create-header">
+      <div class="icon-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+      </div>
+      <h2>Wystaw nowy przedmiot</h2>
+      <p>Wypełnij formularz, aby dodać ofertę do naszego katalogu</p>
     </div>
 
-    <div class="form-group">
-      <label for="category">Kategoria:</label>
-      <select id="category" name="category" [(ngModel)]="newAuction.category" required>
-        <option value="" disabled selected>Wybierz kategorię</option>
-        <option value="Elektronika">Elektronika</option>
-        <option value="Moda">Moda</option>
-        <option value="Dom i Ogród">Dom i Ogród</option>
-        <option value="Motoryzacja">Motoryzacja</option>
-        <option value="Książki">Książki</option>
-      </select>
-    </div>
+    <form (ngSubmit)="onSubmit()" #auctionForm="ngForm">
+      
+      <div class="form-group full-width">
+        <label for="title">Tytuł przedmiotu</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <input type="text" id="title" name="title" [(ngModel)]="newAuction.title" class="form-control" placeholder="np. Smartfon Samsung Galaxy S23, Stan Idealny" required [disabled]="isSubmitting" />
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label for="description">Opis:</label>
-      <textarea id="description" name="description" [(ngModel)]="newAuction.description"></textarea>
-    </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="category">Kategoria</label>
+          <div class="select-wrapper">
+            <select id="category" name="category" [(ngModel)]="newAuction.category" class="form-control form-select" required [disabled]="isSubmitting">
+              <option value="" disabled selected>Wybierz kategorię</option>
+              <option value="Elektronika">Elektronika</option>
+              <option value="Moda">Moda</option>
+              <option value="Dom i Ogród">Dom i Ogród</option>
+              <option value="Motoryzacja">Motoryzacja</option>
+              <option value="Książki">Książki</option>
+            </select>
+            <svg class="select-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
 
-    <div class="form-group">
-      <label for="startingPrice">Cena wywoławcza (zł):</label>
-      <input type="number" id="startingPrice" name="startingPrice" [(ngModel)]="newAuction.startingPrice" min="1" required />
-    </div>
+          <div class="form-group">
+          <label for="startingPrice">Cena wywoławcza (zł)</label>
+          <div class="input-wrapper">
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            <input type="number" id="startingPrice" name="startingPrice" [(ngModel)]="newAuction.startingPrice" class="form-control" min="1" placeholder="0.00" required [disabled]="isSubmitting" />
+          </div>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label for="endDate">Data i godzina zakończenia:</label>
-      <input type="datetime-local" id="endDate" name="endDate" [(ngModel)]="newAuction.endDate" required />
-    </div>
+      <div class="form-group full-width">
+        <label for="endDate">Data i godzina zakończenia</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <input type="datetime-local" id="endDate" name="endDate" [(ngModel)]="newAuction.endDate" class="form-control" required [disabled]="isSubmitting" />
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label for="image">Zdjęcie (opcjonalne):</label>
-      <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
-      <img *ngIf="imagePreview" [src]="imagePreview" class="image-preview" alt="Podgląd zdjęcia" />
-    </div>
+      <div class="form-group full-width">
+        <label for="description">Opis przedmiotu</label>
+        <textarea id="description" name="description" [(ngModel)]="newAuction.description" class="form-control textarea" placeholder="Opisz dokładnie swój przedmiot, jego stan, wady i zalety..." [disabled]="isSubmitting"></textarea>
+      </div>
 
-    <div class="button-group">
-      <button type="submit" class="btn-submit" [disabled]="isSubmitting">
-        {{ isSubmitting ? 'Wystawianie...' : 'Wystaw aukcję' }}
-      </button>
-      <button type="button" class="btn-cancel" routerLink="/auctions">Anuluj</button>
-    </div>
-  </form>
+      <div class="form-group full-width">
+        <label>Zdjęcie produktu (Opcjonalne)</label>
+        
+        <div class="file-upload-wrapper" [class.has-image]="imagePreview">
+          <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" class="file-input-hidden" [disabled]="isSubmitting" />
+          
+          <label for="image" class="file-drop-zone" *ngIf="!imagePreview">
+            <div class="drop-zone-content">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <span class="drop-title">Kliknij, aby dodać zdjęcie</span>
+              <span class="drop-subtitle">PNG, JPG lub WEBP (Max. 5MB)</span>
+            </div>
+          </label>
+
+          <label for="image" class="image-preview-container" *ngIf="imagePreview">
+            <img [src]="imagePreview" class="image-preview" alt="Podgląd zdjęcia" />
+            <div class="preview-overlay">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.59-9.28l5.25 5.12"></path></svg>
+              <span>Zmień zdjęcie</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="actions-wrapper">
+        <button type="submit" class="btn-submit" [disabled]="auctionForm.invalid || isSubmitting">
+          <span *ngIf="!isSubmitting">Wystaw aukcję</span>
+          <div *ngIf="isSubmitting" class="spinner"></div>
+        </button>
+        
+        <a routerLink="/auctions" class="link-cancel" [class.disabled]="isSubmitting">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Anuluj i wróć
+        </a>
+      </div>
+
+    </form>
+  </div>
 </div>

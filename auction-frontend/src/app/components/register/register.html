@@ -1,74 +1,101 @@
-<div class="register-container">
-  <h2>Zarejestruj się</h2>
-
-  <div *ngIf="error" class="error-message">{{ error }}</div>
-
-  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-
-    <div class="form-group">
-      <label for="username">Nazwa użytkownika:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="registerData.username"
-        #username="ngModel"
-        [disabled]="loading"
-        required
-        minlength="3"
-        maxlength="20"
-        class="form-control" />
-
-      <div *ngIf="username.touched && username.invalid" class="error-text">
-        <span *ngIf="username.errors?.['required']">Nazwa użytkownika jest wymagana.</span>
-        <span *ngIf="username.errors?.['minlength']">Nazwa musi mieć minimum 3 znaki.</span>
+<div class="register-wrapper">
+  <div class="register-container">
+    
+    <div class="register-header">
+      <div class="icon-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
       </div>
+      <h2>Dołącz do nas</h2>
+      <p>Stwórz konto i zacznij kupować na Alledrogo</p>
     </div>
 
-    <div class="form-group">
-      <label for="email">Adres E-mail:</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="registerData.email"
-        #email="ngModel"
-        [disabled]="loading"
-        required
-        email
-        class="form-control" />
-
-      <div *ngIf="email.touched && email.invalid" class="error-text">
-        <span *ngIf="email.errors?.['required']">Adres e-mail jest wymagany.</span>
-        <span *ngIf="email.errors?.['email']">Niepoprawny format adresu e-mail.</span>
-      </div>
+    <div *ngIf="error" class="alert-error">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      {{ error }}
     </div>
 
-    <div class="form-group">
-      <label for="password">Hasło:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="registerData.password"
-        #password="ngModel"
-        [disabled]="loading"
-        required
-        minlength="6"
-        class="form-control" />
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
 
-      <div *ngIf="password.touched && password.invalid" class="error-text">
-        <span *ngIf="password.errors?.['required']">Hasło jest wymagane.</span>
-        <span *ngIf="password.errors?.['minlength']">Za mało znaków (minimum 6).</span>
+      <div class="form-group">
+        <label for="username">Nazwa użytkownika</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            [(ngModel)]="registerData.username"
+            #username="ngModel"
+            [disabled]="loading"
+            required
+            minlength="3"
+            maxlength="20"
+            class="form-control"
+            placeholder="Wymyśl swój nick" />
+        </div>
+        <div *ngIf="username.touched && username.invalid" class="error-text">
+          <span *ngIf="username.errors?.['required']">Nazwa użytkownika jest wymagana.</span>
+          <span *ngIf="username.errors?.['minlength']">Nazwa musi mieć minimum 3 znaki.</span>
+        </div>
       </div>
-    </div>
 
-    <div class="button-group">
+      <div class="form-group">
+        <label for="email">Adres E-mail</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="registerData.email"
+            #email="ngModel"
+            [disabled]="loading"
+            required
+            email
+            class="form-control"
+            placeholder="twoj@email.pl" />
+        </div>
+        <div *ngIf="email.touched && email.invalid" class="error-text">
+          <span *ngIf="email.errors?.['required']">Adres e-mail jest wymagany.</span>
+          <span *ngIf="email.errors?.['email']">Niepoprawny format adresu e-mail.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="registerData.password"
+            #password="ngModel"
+            [disabled]="loading"
+            required
+            minlength="6"
+            class="form-control"
+            placeholder="Min. 6 znaków" />
+        </div>
+        <div *ngIf="password.touched && password.invalid" class="error-text">
+          <span *ngIf="password.errors?.['required']">Hasło jest wymagane.</span>
+          <span *ngIf="password.errors?.['minlength']">Za mało znaków (minimum 6).</span>
+        </div>
+      </div>
+
       <button type="submit" [disabled]="registerForm.invalid || loading" class="btn-submit">
-        {{ loading ? 'Rejestrowanie...' : 'Stwórz konto' }}
+        <span *ngIf="!loading">Stwórz konto</span>
+        <div *ngIf="loading" class="spinner"></div>
       </button>
-      <button type="button" routerLink="/login" [disabled]="loading" class="btn-cancel">Anuluj</button>
-    </div>
 
-  </form>
+      <div class="additional-actions">
+        <p class="login-text">Masz już konto? <a routerLink="/login" class="link-login">Zaloguj się</a></p>
+        <a routerLink="/auctions" class="link-cancel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Wróć do strony głównej
+        </a>
+      </div>
+
+    </form>
+  </div>
 </div>
