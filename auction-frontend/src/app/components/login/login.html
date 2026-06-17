@@ -1,23 +1,50 @@
-<div class="login-container">
-  <h2>Zaloguj się</h2>
-
-  <div *ngIf="error" class="error-message">{{ error }}</div>
-
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="username">Nazwa użytkownika:</label>
-      <input type="text" id="username" name="username" [(ngModel)]="loginData.username" [disabled]="loading" required />
+<div class="login-wrapper">
+  <div class="login-container">
+    
+    <div class="login-header">
+      <div class="icon-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <h2>Witaj z powrotem</h2>
+      <p>Zaloguj się, aby kontynuować w Alledrogo</p>
     </div>
 
-    <div class="form-group">
-      <label for="password">Hasło:</label>
-      <input type="password" id="password" name="password" [(ngModel)]="loginData.password" [disabled]="loading" required />
+    <div *ngIf="error" class="alert-error">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      {{ error }}
     </div>
 
-    <div class="button-group">
-      <button type="submit" class="btn-submit" [disabled]="loading">{{ loading ? 'Logowanie...' : 'Zaloguj się' }}</button>
-      <button type="button" class="btn-cancel" routerLink="/auctions" [disabled]="loading">Anuluj</button>
-      <button type="button" class="btn-register" routerLink="/register" [disabled]="loading">Rejestracja</button>
-    </div>
-  </form>
+    <form (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="username">Nazwa użytkownika</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <input type="text" id="username" name="username" [(ngModel)]="loginData.username" [disabled]="loading" placeholder="Wpisz swój login" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <input type="password" id="password" name="password" [(ngModel)]="loginData.password" [disabled]="loading" placeholder="••••••••" required />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        <span *ngIf="!loading">Zaloguj się</span>
+        <div *ngIf="loading" class="spinner"></div>
+      </button>
+
+      <div class="additional-actions">
+        <p class="register-text">Nie masz konta? <a routerLink="/register" class="link-register">Zarejestruj się</a></p>
+        <a routerLink="/auctions" class="link-cancel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Wróć do strony głównej
+        </a>
+      </div>
+
+    </form>
+  </div>
 </div>

@@ -1,81 +1,330 @@
-.form-container {
-  max-width: 500px;
-  margin: 30px auto;
-  padding: 25px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  font-family: sans-serif;
+/* --- ZMIENNE KOLORYSTYCZNE --- */
+:host {
+  display: block;
+  min-height: calc(100vh - 250px);
+  padding: 40px 20px;
+  background-color: #f3f4f6;
+  font-family: 'Inter', system-ui, sans-serif;
+  
+  --app-green: #15803d;
+  --app-green-hover: #166534;
+  --app-green-light: #f0fdf4;
+  --app-text: #1f2937;
+  --app-muted: #6b7280;
+  --app-border: #d1d5db;
+  --app-danger: #ef4444;
 }
 
-.form-container h2 {
-  margin-top: 0;
-  color: #333;
+/* --- KONTENER GŁÓWNY --- */
+.create-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.create-container {
+  width: 100%;
+  max-width: 650px; /* Szerszy dla formularza dwukolumnowego */
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+  border: 1px solid #e5e7eb;
+}
+
+/* --- HEADER --- */
+.create-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
+}
+
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  background-color: var(--app-green-light);
+  color: var(--app-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 6px rgba(21, 128, 61, 0.1);
+}
+
+.create-header h2 {
+  margin: 0 0 8px 0;
+  color: var(--app-text);
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.create-header p {
+  margin: 0;
+  color: var(--app-muted);
+  font-size: 0.95rem;
+}
+
+/* --- FORMULARZ (GRID) --- */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  color: #555;
-  font-weight: bold;
-  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--app-text);
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+/* --- INPUTY --- */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: #9ca3af;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.form-control {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: sans-serif;
+  padding: 12px 16px 12px 42px; /* Miejsce na ikonę */
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--app-text);
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: inherit;
 }
 
-.form-group textarea {
-  height: 100px;
+/* Wyjątek dla Selectów i Textarea, które mogą nie mieć ikon z lewej */
+.form-select {
+  padding-left: 16px;
+  padding-right: 40px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.textarea {
+  padding: 16px;
+  min-height: 120px;
   resize: vertical;
 }
 
-.button-group {
+/* Efekty Focus */
+.form-control:focus {
+  background-color: #ffffff;
+  border-color: var(--app-green);
+  box-shadow: 0 0 0 4px var(--app-green-light);
+}
+
+.form-control:focus + .input-icon,
+.input-wrapper:focus-within .input-icon {
+  color: var(--app-green);
+}
+
+.form-control:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* --- DRAG & DROP (Plik) --- */
+.file-input-hidden {
+  display: none;
+}
+
+.file-drop-zone {
+  display: block;
+  width: 100%;
+  padding: 30px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-drop-zone:hover {
+  border-color: var(--app-green);
+  background-color: var(--app-green-light);
+}
+
+.drop-zone-content {
   display: flex;
-  gap: 10px;
-  margin-top: 25px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--app-muted);
+}
+
+.drop-zone-content svg {
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.file-drop-zone:hover .drop-zone-content svg {
+  color: var(--app-green);
+}
+
+.drop-title {
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.drop-subtitle {
+  font-size: 0.8rem;
+}
+
+/* Podgląd zdjęcia */
+.image-preview-container {
+  display: block;
+  width: 100%;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--app-border);
+}
+
+.image-preview {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.preview-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-weight: 600;
+}
+
+.image-preview-container:hover .preview-overlay {
+  opacity: 1;
+}
+
+/* --- AKCJE I PRZYCISKI --- */
+.actions-wrapper {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--app-border);
+  padding-top: 24px;
 }
 
 .btn-submit {
-  flex: 1;
-  background: #7b2cbf;
+  width: 100%;
+  background: var(--app-green);
   color: white;
   border: none;
-  padding: 12px;
-  border-radius: 4px;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  box-shadow: 0 4px 6px rgba(21, 128, 61, 0.2);
 }
 
-.btn-submit:hover {
-  background: #6a23a3;
+.btn-submit:hover:not(:disabled) {
+  background: var(--app-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(21, 128, 61, 0.3);
 }
 
-.btn-cancel {
-  flex: 1;
-  background: #e0e0e0;
-  color: #333;
-  border: none;
-  padding: 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+.btn-submit:disabled {
+  background: #9ca3af;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.btn-cancel:hover {
-  background: #d5d5d5;
+/* Animacja Ładowania */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Link Anuluj */
+.link-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--app-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.link-cancel:hover:not(.disabled) {
+  color: var(--app-text);
+}
+
+.link-cancel.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- RWD (Telefony) --- */
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .create-container { padding: 30px 20px; }
+  :host { padding: 20px 16px; }
 }

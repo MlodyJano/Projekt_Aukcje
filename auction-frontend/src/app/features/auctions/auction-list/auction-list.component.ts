@@ -65,13 +65,29 @@ export class AuctionListComponent implements OnInit, OnDestroy {
     this.loadAuctions();
   }
 
-  getStatusClass(status: string): string {
+getStatusClass(status: string): string {
     const statusMap: { [key: string]: string } = {
       'Active': 'status-active',
       'Ended': 'status-ended',
-      'Cancelled': 'status-cancelled'
+      'Cancelled': 'status-cancelled',
+      'Inactive': 'status-cancelled' // <--- Dodane: Nieaktywna dostanie szary kolor (taki jak anulowana)
     };
     return statusMap[status] || 'status-default';
+  }
+
+  translateStatus(status: string): string {
+    if (!status) return '';
+    
+    const statusLower = status.toLowerCase(); 
+    
+    const dictionary: { [key: string]: string } = {
+      'active': 'Aktywna',
+      'ended': 'Zakończona',
+      'cancelled': 'Anulowana',
+      'inactive': 'Nieaktywna' // <--- Dodane: Tłumaczenie dla Inactive
+    };
+    
+    return dictionary[statusLower] || status; 
   }
 
   getTimeRemaining(endDate: Date): string {
@@ -89,17 +105,28 @@ export class AuctionListComponent implements OnInit, OnDestroy {
     if (hours > 0) return `${hours}h ${minutes}m`;
     return `${minutes}m`;
   }
+
+  // --- Dodana funkcja dla HTML ---
+  isEndingSoon(endDate: string | Date): boolean {
+    if (!endDate) return false;
+    const end = new Date(endDate).getTime();
+    const now = new Date().getTime();
+    const hoursLeft = (end - now) / (1000 * 60 * 60);
+    return hoursLeft > 0 && hoursLeft <= 24;
+  }
+  // -------------------------------
+
   getDefaultImage(category: string): string {
     const map: { [key: string]: string } = {
-      'Elektronika': 'categories/elektronika.png',
-      'Moda': 'categories/moda.png',
-      'Dom i Ogród': 'categories/dom.png',
-      'Motoryzacja': 'categories/motoryzacja.png',
-      'Książki': 'categories/ksiazki.png',
-      'Antyki': 'categories/antyki.png',
-      'Sport': 'categories/sport.png'
+      'Elektronika': 'categories/elektronika.svg',
+      'Moda': 'categories/moda.svg',
+      'Dom i Ogród': 'categories/dom.svg',
+      'Motoryzacja': 'categories/motoryzacja.svg',
+      'Książki': 'categories/ksiazki.svg',
+      'Antyki': 'categories/antyki.svg',
+      'Sport': 'categories/sport.svg'
     };
-    return map[category] || 'categories/inne.png';
+    return map[category] || 'categories/inne.svg';
   }
 
   ngOnDestroy(): void {
