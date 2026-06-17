@@ -91,13 +91,14 @@ export class AuctionListComponent implements OnInit, OnDestroy {
   }
   getDefaultImage(category: string): string {
     const map: { [key: string]: string } = {
-      'Elektronika': 'categories/elektronika.png',
-      'Moda': 'categories/moda.png',
-      'Dom i Ogród': 'categories/dom.png',
-      'Motoryzacja': 'categories/motoryzacja.png',
-      'Książki': 'categories/ksiazki.png',
-      'Antyki': 'categories/antyki.png',
-      'Sport': 'categories/sport.png'
+      'Elektronika': 'categories/elektronika.webp',
+      'Moda': 'categories/moda.webp',
+      'Dom i Ogród': 'categories/dom.webp',
+      'Motoryzacja': 'categories/motoryzacja.webp',
+      'Książki': 'categories/ksiazki.webp',
+      'Antyki': 'categories/antyki.webp',
+      'Sport': 'categories/sport.webp',
+      'Inne': 'categories/inne.webp'
     };
     return map[category] || 'categories/inne.png';
   }

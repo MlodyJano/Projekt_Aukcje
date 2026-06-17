@@ -62,6 +62,7 @@
             [ngSrc]="auction.imagePath ? 'http://localhost:5026' + auction.imagePath : getDefaultImage(auction.category)"
             [alt]="auction.title"
             fill
+            priority 
             style="object-fit: cover;"
           />
         </div>
