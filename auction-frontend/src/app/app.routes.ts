@@ -6,6 +6,7 @@ import { AuctionCreateComponent } from './components/auction-create/auction-crea
 import { MyAuctionsComponent } from './components/my-auctions/my-auctions';
 import { AuthGuard } from './core/guards/auth.guard';
 import { MyBidsComponent } from './components/my-bids/my-bids';
+import { ProfileComponent } from './components/profile/profile';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/auctions', pathMatch: 'full' },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'my-auctions', component: MyAuctionsComponent, canActivate: [AuthGuard] },
   { path: 'my-bids', component: MyBidsComponent, canActivate: [AuthGuard] },
   { path: 'add-auction', component: AuctionCreateComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/auctions' }
 ];

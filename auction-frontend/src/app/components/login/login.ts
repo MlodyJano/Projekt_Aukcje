@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent {
   loading = false;
   error: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   onSubmit(): void {
     if (!this.loginData.username || !this.loginData.password) {
@@ -36,8 +37,8 @@ export class LoginComponent {
       },
       error: (err: any) => {
         this.loading = false;
-        this.error = 'Logowanie nie powiodło się. Sprawdź wpisane dane.';
-        console.error(err);
+        this.error = err?.error?.message || 'Logowanie nie powiodło się.';
+        this.cdr.detectChanges();
       }
     });
   }

@@ -1,0 +1,87 @@
+<div class="container" *ngIf="currentUser">
+  <div class="header">
+    <h1>Moje konto</h1>
+  </div>
+
+  <div class="profile-card">
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+
+      <div class="form-group">
+        <label for="username">Nazwa użytkownika</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="formData.username"
+          #username="ngModel"
+          [disabled]="isSaving"
+          required
+          minlength="3"
+          maxlength="20"
+          class="form-control" />
+
+        <div *ngIf="username.touched && username.invalid" class="error-text">
+          <span *ngIf="username.errors?.['required']">Nazwa użytkownika jest wymagana.</span>
+          <span *ngIf="username.errors?.['minlength']">Nazwa musi mieć minimum 3 znaki.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Adres e-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="formData.email"
+          #email="ngModel"
+          [disabled]="isSaving"
+          required
+          email
+          class="form-control" />
+
+        <div *ngIf="email.touched && email.invalid" class="error-text">
+          <span *ngIf="email.errors?.['required']">Adres e-mail jest wymagany.</span>
+          <span *ngIf="email.errors?.['email']">Niepoprawny format adresu e-mail.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Hasło</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="formData.password"
+          #password="ngModel"
+          [disabled]="isSaving"
+          required
+          minlength="6"
+          class="form-control" />
+        <small class="hint-text">Podaj swoje obecne lub nowe hasło, aby zapisać zmiany.</small>
+
+        <div *ngIf="password.touched && password.invalid" class="error-text">
+          <span *ngIf="password.errors?.['required']">Hasło jest wymagane.</span>
+          <span *ngIf="password.errors?.['minlength']">Za mało znaków (minimum 6).</span>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="profileForm.invalid || isSaving" class="btn-save">
+        {{ isSaving ? 'Zapisywanie...' : 'Zapisz zmiany' }}
+      </button>
+    </form>
+  </div>
+
+  <div class="danger-zone">
+    <h3>Usuń konto</h3>
+    <p>Usunięcie konta jest nieodwracalne. Nie będzie możliwe, jeśli masz aktywne aukcje lub złożone oferty.</p>
+
+    <div *ngIf="deleteErrorMessage" class="alert alert-danger">{{ deleteErrorMessage }}</div>
+
+    <button type="button" (click)="deleteAccount()" [disabled]="isDeleting" class="btn-delete">
+      {{ isDeleting ? 'Usuwanie...' : 'Usuń moje konto' }}
+    </button>
+  </div>
+</div>
