@@ -168,6 +168,16 @@ export class AuctionListComponent implements OnInit, OnDestroy {
 
   getDefaultImage(category: string): string {
     const map: { [key: string]: string } = {
+<<<<<<< HEAD
+      'Elektronika': 'categories/elektronika.webp',
+      'Moda': 'categories/moda.webp',
+      'Dom i Ogród': 'categories/dom.webp',
+      'Motoryzacja': 'categories/motoryzacja.webp',
+      'Książki': 'categories/ksiazki.webp',
+      'Antyki': 'categories/antyki.webp',
+      'Sport': 'categories/sport.webp',
+      'Inne': 'categories/inne.webp'
+=======
       'Elektronika': 'categories/elektronika.svg',
       'Moda': 'categories/moda.svg',
       'Dom i Ogród': 'categories/dom.svg',
@@ -175,6 +185,7 @@ export class AuctionListComponent implements OnInit, OnDestroy {
       'Książki': 'categories/ksiazki.svg',
       'Antyki': 'categories/antyki.svg',
       'Sport': 'categories/sport.svg'
+>>>>>>> 59a9ffe85d0f6a8c104d9e5b018d9e8c565af9b2
     };
     return map[category] || 'categories/inne.svg';
   }

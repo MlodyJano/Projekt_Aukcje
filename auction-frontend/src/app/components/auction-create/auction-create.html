@@ -9,10 +9,27 @@
       <p>Wypełnij formularz, aby dodać ofertę do naszego katalogu</p>
     </div>
 
+<<<<<<< HEAD
     <div *ngIf="errors['general']" class="alert alert-danger">
       {{ errors['general'] }}
     </div>
 
+=======
+<<<<<<< HEAD
+    <div class="form-group">
+      <label for="category">Kategoria:</label>
+      <select id="category" name="category" [(ngModel)]="newAuction.category" required>
+        <option value="" disabled selected>Wybierz kategorię</option>
+        <option value="Elektronika">Elektronika</option>
+        <option value="Moda">Moda</option>
+        <option value="Dom i Ogród">Dom i Ogród</option>
+        <option value="Motoryzacja">Motoryzacja</option>
+        <option value="Książki">Książki</option>
+        <option value="Inne">Inne</option>
+      </select>
+    </div>
+=======
+>>>>>>> c6e8d1c5a903b488e07768fc036a8510461004bc
     <form (ngSubmit)="onSubmit()" #auctionForm="ngForm">
       
       <div class="form-group full-width">
@@ -23,6 +40,7 @@
         </div>
         <span *ngIf="errors['title']" class="error-msg">{{ errors['title'] }}</span>
       </div>
+>>>>>>> 59a9ffe85d0f6a8c104d9e5b018d9e8c565af9b2
 
       <div class="form-row">
         <div class="form-group">
