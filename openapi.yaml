@@ -1,0 +1,794 @@
+openapi: 3.0.3
+info:
+  title: System Aukcyjny API
+  description: |
+    REST API dla systemu aukcyjnego zbudowanego w .NET 10. Umożliwia zarządzanie 
+    użytkownikami, aukcjami i ofertami licytacyjnymi.
+    
+    ## Uwierzytelnienie
+    API nie korzysta z tokenów JWT — tożsamość użytkownika jest przekazywana 
+    jako pole `ownerId` lub `bidderId` w ciele żądania. Logowanie zwraca dane 
+    użytkownika, które klient przechowuje lokalnie (np. w `localStorage`).
+    
+    ## Statusy aukcji
+    - `Active` — aukcja trwa, można składać oferty
+    - `Ended` — czas aukcji upłynął (status automatycznie ustawiany przy odczycie)
+    - `Cancelled` — aukcja anulowana przez właściciela
+  version: 1.0.0
+  contact:
+    name: Projekt Aukcje
+    url: https://github.com/MlodyJano/Projekt_Aukcje
+
+servers:
+  - url: http://localhost:5000
+    description: Lokalny serwer deweloperski (HTTP)
+  - url: https://localhost:7000
+    description: Lokalny serwer deweloperski (HTTPS)
+
+tags:
+  - name: Aukcje
+    description: Zarządzanie aukcjami
+  - name: Oferty
+    description: Składanie i przeglądanie ofert licytacyjnych
+  - name: Użytkownicy
+    description: Rejestracja, logowanie i zarządzanie kontami
+
+paths:
+
+  # ─────────────────────────────────────────────
+  # AUKCJE
+  # ─────────────────────────────────────────────
+
+  /api/auctions:
+    get:
+      tags: [Aukcje]
+      summary: Pobierz listę aukcji
+      description: |
+        Zwraca wszystkie aukcje, opcjonalnie filtrowane po kategorii i/lub statusie.
+        Aukcje, których czas zakończenia minął, są automatycznie oznaczane jako `Ended`.
+        Kolejność: Active (najkrótszy czas) → Ended → Cancelled.
+      parameters:
+        - name: category
+          in: query
+          required: false
+          description: Filtr po kategorii (np. `Elektronika`, `Książki`, `Sport`)
+          schema:
+            type: string
+            example: Elektronika
+        - name: status
+          in: query
+          required: false
+          description: Filtr po statusie aukcji
+          schema:
+            type: string
+            enum: [Active, Ended, Cancelled]
+            example: Active
+      responses:
+        '200':
+          description: Lista aukcji
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuctionDto'
+              example:
+                - id: 1
+                  title: "Smartfon Samsung Galaxy S23"
+                  description: "Stan idealny, używany 3 miesiące"
+                  category: "Elektronika"
+                  startingPrice: 1500.00
+                  currentPrice: 1750.00
+                  startDate: "2026-06-10T10:00:00Z"
+                  endDate: "2026-06-20T10:00:00Z"
+                  status: "Active"
+                  ownerId: 1
+                  ownerUsername: "jan_kowalski"
+                  imagePath: "/uploads/1_abc123.jpg"
+
+    post:
+      tags: [Aukcje]
+      summary: Utwórz nową aukcję
+      description: Tworzy aukcję ze statusem `Active`. Cena bieżąca jest równa cenie wywoławczej.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionCreateDto'
+            example:
+              title: "Rower górski Trek"
+              description: "Rocznik 2023, przebieg 200 km"
+              category: "Sport"
+              startingPrice: 2500.00
+              endDate: "2026-07-01T18:00:00Z"
+              ownerId: 3
+      responses:
+        '201':
+          description: Aukcja utworzona pomyślnie
+          headers:
+            Location:
+              description: URL nowo utworzonej aukcji
+              schema:
+                type: string
+                example: /api/auctions/42
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionDto'
+        '400':
+          description: Błąd walidacji danych wejściowych
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+
+  /api/auctions/{id}:
+    get:
+      tags: [Aukcje]
+      summary: Pobierz aukcję po ID
+      parameters:
+        - $ref: '#/components/parameters/AuctionId'
+      responses:
+        '200':
+          description: Szczegóły aukcji
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuctionDto'
+        '404':
+          description: Aukcja nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              example:
+                message: "Aukcja o ID 99 nie istnieje."
+
+    put:
+      tags: [Aukcje]
+      summary: Zaktualizuj aukcję
+      description: Nadpisuje tytuł, opis, kategorię, cenę wywoławczą i datę zakończenia.
+      parameters:
+        - $ref: '#/components/parameters/AuctionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionCreateDto'
+      responses:
+        '204':
+          description: Aukcja zaktualizowana (brak treści odpowiedzi)
+        '400':
+          description: Błąd walidacji
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '404':
+          description: Aukcja nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+    delete:
+      tags: [Aukcje]
+      summary: Usuń aukcję
+      parameters:
+        - $ref: '#/components/parameters/AuctionId'
+      responses:
+        '204':
+          description: Aukcja usunięta
+        '404':
+          description: Aukcja nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /api/auctions/{id}/image:
+    post:
+      tags: [Aukcje]
+      summary: Prześlij zdjęcie aukcji
+      description: |
+        Przyjmuje plik obrazu (`multipart/form-data`) i zapisuje go w katalogu 
+        `uploads/`. Aktualizuje pole `imagePath` aukcji. Dozwolone formaty: 
+        `image/jpeg`, `image/png`, `image/webp`.
+      parameters:
+        - $ref: '#/components/parameters/AuctionId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Plik obrazu (JPEG, PNG lub WebP)
+      responses:
+        '200':
+          description: Zdjęcie przesłane pomyślnie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  imagePath:
+                    type: string
+                    example: "/uploads/5_d3a1b2c4-1234-5678-abcd-ef0123456789.jpg"
+        '400':
+          description: Brak pliku lub niedozwolony format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                brakPliku:
+                  value:
+                    message: "Brak pliku."
+                zlyFormat:
+                  value:
+                    message: "Dozwolone formaty: jpg, png, webp."
+        '404':
+          description: Aukcja nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /api/auctions/{id}/cancel:
+    put:
+      tags: [Aukcje]
+      summary: Anuluj aukcję
+      description: |
+        Zmienia status aukcji na `Cancelled`. Możliwe tylko gdy:
+        - aukcja ma status `Active`,
+        - żądający jest właścicielem aukcji (`ownerId`).
+      parameters:
+        - $ref: '#/components/parameters/AuctionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuctionCancelDto'
+            example:
+              ownerId: 3
+      responses:
+        '200':
+          description: Aukcja anulowana
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Aukcja została anulowana."
+        '400':
+          description: Błąd biznesowy (zły właściciel, zły status)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                nieWlasciciel:
+                  value:
+                    message: "Nie możesz anulować aukcji, której nie jesteś właścicielem."
+                nieAktywna:
+                  value:
+                    message: "Można anulować tylko aktywną aukcję."
+
+  # ─────────────────────────────────────────────
+  # OFERTY (w kontekście aukcji)
+  # ─────────────────────────────────────────────
+
+  /api/auctions/{auctionId}/bids:
+    get:
+      tags: [Oferty]
+      summary: Pobierz oferty dla aukcji
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdRoute'
+      responses:
+        '200':
+          description: Lista ofert dla aukcji (posortowana chronologicznie)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BidDto'
+              example:
+                - id: 10
+                  amount: 1600.00
+                  bidTime: "2026-06-12T14:23:00Z"
+                  bidderId: 2
+                  bidderUsername: "marta_nowak"
+                  auctionId: 1
+                  auctionTitle: ""
+                  auctionCategory: ""
+                  auctionImagePath: null
+
+    post:
+      tags: [Oferty]
+      summary: Złóż ofertę licytacyjną
+      description: |
+        Składa ofertę na aukcję. Warunki:
+        - Aukcja musi mieć status `Active` i jej czas nie może być przekroczony.
+        - Kwota oferty musi być **wyższa** od aktualnej ceny.
+        - Licytujący nie może być właścicielem aukcji.
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdRoute'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BidCreateDto'
+            example:
+              amount: 1800.00
+              bidderId: 2
+      responses:
+        '200':
+          description: Oferta złożona pomyślnie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Oferta została złożona pomyślnie!"
+        '400':
+          description: Błąd biznesowy (za niska kwota, własna aukcja, zakończona aukcja)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                zaLiskaKwota:
+                  value:
+                    message: "Twoja oferta musi być wyższa niż aktualna cena (1750.00 zł)."
+                wlasnaAukcja:
+                  value:
+                    message: "Nie możesz licytować własnej aukcji."
+                aukcjaZakonczona:
+                  value:
+                    message: "Ta aukcja została już zakończona."
+
+  # ─────────────────────────────────────────────
+  # UŻYTKOWNICY
+  # ─────────────────────────────────────────────
+
+  /api/users:
+    get:
+      tags: [Użytkownicy]
+      summary: Pobierz listę wszystkich użytkowników
+      responses:
+        '200':
+          description: Lista użytkowników
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+
+    post:
+      tags: [Użytkownicy]
+      summary: Zarejestruj nowego użytkownika
+      description: Hasło jest hashowane algorytmem BCrypt przed zapisaniem do bazy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterDto'
+            example:
+              username: "jan_kowalski"
+              email: "jan@example.com"
+              password: "tajneHaslo123"
+      responses:
+        '200':
+          description: Użytkownik zarejestrowany pomyślnie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Nazwa użytkownika jest już zajęta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              example:
+                message: "Nazwa użytkownika jest już zajęta."
+
+  /api/users/{id}:
+    get:
+      tags: [Użytkownicy]
+      summary: Pobierz użytkownika po ID
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: Dane użytkownika
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '404':
+          description: Użytkownik nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+    put:
+      tags: [Użytkownicy]
+      summary: Zaktualizuj dane użytkownika
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterDto'
+      responses:
+        '204':
+          description: Dane zaktualizowane
+        '404':
+          description: Użytkownik nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+    delete:
+      tags: [Użytkownicy]
+      summary: Usuń konto użytkownika
+      description: Nie można usunąć użytkownika z aktywnymi aukcjami lub złożonymi ofertami.
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '204':
+          description: Konto usunięte
+        '404':
+          description: Użytkownik nie istnieje
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: Konflikt — użytkownik ma powiązane aukcje lub oferty
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              example:
+                message: "Nie można usunąć konta, ponieważ masz aktywne aukcje lub złożone oferty."
+
+  /api/users/login:
+    post:
+      tags: [Użytkownicy]
+      summary: Zaloguj się
+      description: |
+        Weryfikuje login i hasło. Hasło jest weryfikowane przez BCrypt. 
+        Zwraca dane użytkownika — brak JWT, klient przechowuje stan sesji samodzielnie.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+            example:
+              username: "admin"
+              password: "admin123"
+      responses:
+        '200':
+          description: Zalogowano pomyślnie — zwraca dane użytkownika
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+              example:
+                id: 1
+                username: "admin"
+                email: "admin@auction.pl"
+                createdAt: "2026-06-11T19:51:00Z"
+        '400':
+          description: Brak loginu lub hasła w żądaniu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              example:
+                message: "Wymagane jest podanie loginu i hasła."
+        '401':
+          description: Nieprawidłowe dane logowania
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              example:
+                message: "Nieprawidłowy login lub hasło."
+
+  /api/users/{userId}/bids:
+    get:
+      tags: [Oferty]
+      summary: Pobierz oferty złożone przez użytkownika
+      description: Zwraca wszystkie oferty danego użytkownika z danymi powiązanych aukcji.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID użytkownika
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: Lista ofert użytkownika
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BidDto'
+
+# ─────────────────────────────────────────────
+# KOMPONENTY WIELOKROTNEGO UŻYTKU
+# ─────────────────────────────────────────────
+
+components:
+  parameters:
+    AuctionId:
+      name: id
+      in: path
+      required: true
+      description: ID aukcji
+      schema:
+        type: integer
+        example: 1
+
+    AuctionIdRoute:
+      name: auctionId
+      in: path
+      required: true
+      description: ID aukcji
+      schema:
+        type: integer
+        example: 1
+
+    UserId:
+      name: id
+      in: path
+      required: true
+      description: ID użytkownika
+      schema:
+        type: integer
+        example: 1
+
+  schemas:
+    AuctionDto:
+      type: object
+      description: Reprezentacja aukcji zwracana przez API
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Smartfon Samsung Galaxy S23"
+        description:
+          type: string
+          example: "Stan idealny, używany 3 miesiące"
+        category:
+          type: string
+          example: "Elektronika"
+        startingPrice:
+          type: number
+          format: decimal
+          example: 1500.00
+        currentPrice:
+          type: number
+          format: decimal
+          example: 1750.00
+        startDate:
+          type: string
+          format: date-time
+          example: "2026-06-10T10:00:00Z"
+        endDate:
+          type: string
+          format: date-time
+          example: "2026-06-20T10:00:00Z"
+        status:
+          type: string
+          enum: [Active, Ended, Cancelled]
+          example: "Active"
+        ownerId:
+          type: integer
+          example: 1
+        ownerUsername:
+          type: string
+          example: "jan_kowalski"
+        imagePath:
+          type: string
+          nullable: true
+          example: "/uploads/1_abc123.jpg"
+
+    AuctionCreateDto:
+      type: object
+      required: [title, description, category, startingPrice, endDate, ownerId]
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 100
+          example: "Rower górski Trek"
+        description:
+          type: string
+          example: "Rocznik 2023, przebieg 200 km"
+        category:
+          type: string
+          example: "Sport"
+        startingPrice:
+          type: number
+          format: decimal
+          minimum: 0.01
+          example: 2500.00
+        endDate:
+          type: string
+          format: date-time
+          example: "2026-07-01T18:00:00Z"
+        ownerId:
+          type: integer
+          description: ID użytkownika wystawiającego aukcję
+          example: 3
+
+    AuctionCancelDto:
+      type: object
+      required: [ownerId]
+      properties:
+        ownerId:
+          type: integer
+          description: ID właściciela aukcji (weryfikacja uprawnień)
+          example: 3
+
+    BidDto:
+      type: object
+      description: Reprezentacja oferty licytacyjnej
+      properties:
+        id:
+          type: integer
+          example: 10
+        amount:
+          type: number
+          format: decimal
+          example: 1800.00
+        bidTime:
+          type: string
+          format: date-time
+          example: "2026-06-12T14:23:00Z"
+        bidderId:
+          type: integer
+          example: 2
+        bidderUsername:
+          type: string
+          example: "marta_nowak"
+        auctionId:
+          type: integer
+          example: 1
+        auctionTitle:
+          type: string
+          example: "Smartfon Samsung Galaxy S23"
+        auctionCategory:
+          type: string
+          example: "Elektronika"
+        auctionImagePath:
+          type: string
+          nullable: true
+          example: "/uploads/1_abc123.jpg"
+
+    BidCreateDto:
+      type: object
+      required: [amount, bidderId]
+      properties:
+        amount:
+          type: number
+          format: decimal
+          minimum: 0.01
+          description: Kwota oferty (musi być wyższa od aktualnej ceny aukcji)
+          example: 1800.00
+        bidderId:
+          type: integer
+          description: ID użytkownika składającego ofertę
+          example: 2
+
+    UserDto:
+      type: object
+      description: Publiczne dane użytkownika (bez hasła)
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: "jan_kowalski"
+        email:
+          type: string
+          format: email
+          example: "jan@example.com"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2026-06-11T19:51:00Z"
+
+    UserRegisterDto:
+      type: object
+      required: [username, email, password]
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 20
+          example: "jan_kowalski"
+        email:
+          type: string
+          format: email
+          example: "jan@example.com"
+        password:
+          type: string
+          minLength: 6
+          maxLength: 100
+          format: password
+          example: "tajneHaslo123"
+
+    LoginDto:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          example: "admin"
+        password:
+          type: string
+          format: password
+          example: "admin123"
+
+    ErrorMessage:
+      type: object
+      description: Standardowa odpowiedź błędu
+      properties:
+        message:
+          type: string
+          example: "Wystąpił błąd."
+
+    ValidationProblemDetails:
+      type: object
+      description: Odpowiedź błędu walidacji ASP.NET Core
+      properties:
+        type:
+          type: string
+          example: "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+        title:
+          type: string
+          example: "One or more validation errors occurred."
+        status:
+          type: integer
+          example: 400
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            title: ["Nazwa przedmiotu jest wymagana."]
+            startingPrice: ["Cena wywoławcza musi być większa od zera."]
