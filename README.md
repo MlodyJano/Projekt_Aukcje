@@ -110,6 +110,13 @@ Dostępne są również dwie przykładowe aukcje (Smartfon testowy, Książka pr
 
 ---
 
+## Diagram bazy danych (ERD)
+
+Struktura relacyjna trwałego przechowywania danych systemu aukcyjnego (SQLite), obrazująca powiązania między encjami User, Auction oraz Bid.
+
+![Diagram ERD bazy danych](erd.png)
+
+
 ## Dokumentacja API
 
 Bazowy URL: `http://localhost:8080` (Docker) lub `http://localhost:5000` (lokalne).
