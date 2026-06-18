@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VIpCYt/854g=",
+  "dgSpecHash": "9Cl5k8Q6Rbg=",
   "success": true,
-  "projectFilePath": "F:\\Programowanie\\Angular\\Backend\\AuctionSystem.API\\AuctionSystem.API\\AuctionSystem.API.csproj",
+  "projectFilePath": "F:\\Programowanie\\Angular\\backend\\AuctionSystem.API\\AuctionSystem.API\\AuctionSystem.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rogos\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\rogos\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
