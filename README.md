@@ -1,10 +1,10 @@
-#System Aukcyjny — Projekt_Aukcje
+# System Aukcyjny — Projekt_Aukcje
 
 Pełnostackowa aplikacja aukcyjna zbudowana w **ASP.NET Core 10** (backend) i **Angular** (frontend). Umożliwia rejestrację użytkowników, wystawianie aukcji, licytowanie i zarządzanie własnym kontem.
 
 ---
 
-##Spis treści
+## Spis treści
 
 - [Wymagania wstępne](#wymagania-wstępne)
 - [Szybki start (Docker)](#szybki-start-docker)
@@ -397,7 +397,7 @@ Testy pokrywają:
 
 ---
 
-##Struktura projektu
+## Struktura projektu
 
 ```
 Projekt_Aukcje/
@@ -420,7 +420,7 @@ Projekt_Aukcje/
 
 ---
 
-##Technologie
+## Technologie
 
 | Warstwa  | Technologia                          |
 |----------|--------------------------------------|
