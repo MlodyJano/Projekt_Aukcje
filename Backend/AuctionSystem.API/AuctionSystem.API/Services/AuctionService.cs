@@ -178,7 +178,7 @@ namespace AuctionSystem.API.Services
             foreach (var auction in auctions)
             {
                 if (string.Equals(auction.Status, "Active", StringComparison.OrdinalIgnoreCase)
-                    && auction.EndDate < DateTime.Now)
+                    && auction.EndDate < DateTime.UtcNow)
                 {
                     auction.Status = "Ended";
                     await _auctionRepository.UpdateAuctionAsync(auction);

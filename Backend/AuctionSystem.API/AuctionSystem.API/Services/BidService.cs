@@ -50,7 +50,7 @@ namespace AuctionSystem.API.Services
             var auction = await _auctionRepository.GetAuctionByIdAsync(auctionId);
             if (auction == null) return "Aukcja nie istnieje.";
 
-            if (auction.EndDate < DateTime.Now || auction.Status.ToLower() != "active")
+            if (auction.EndDate < DateTime.UtcNow || auction.Status.ToLower() != "active")
             {
                 return "Ta aukcja została już zakończona.";
             }
