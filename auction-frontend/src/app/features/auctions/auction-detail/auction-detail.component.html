@@ -15,7 +15,7 @@
         <p class="description">{{ auction.description }}</p>
       </div>
       <span class="badge" [ngClass]="getStatusClass(auction.status)">
-        {{ auction.status }}
+        {{ translateStatus(auction.status) }}
       </span>
     </div>
     <div class="image-container">

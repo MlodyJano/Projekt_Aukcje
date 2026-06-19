@@ -209,6 +209,21 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
       });
   }
 
+  translateStatus(status: string): string {
+    if (!status) return '';
+    
+    const statusLower = status.toLowerCase(); 
+    
+    const dictionary: { [key: string]: string } = {
+      'active': 'Aktywna',
+      'ended': 'Zakończona',
+      'cancelled': 'Anulowana',
+      'inactive': 'Nieaktywna'
+    };
+    
+    return dictionary[statusLower] || status; 
+  }
+
   goBack(): void {
     this.router.navigate(['/auctions']);
   }
