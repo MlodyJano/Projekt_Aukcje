@@ -1,0 +1,28 @@
+# Wyklucz foldery wygenerowane przez Visual Studio na Windows.
+# To jest KLUCZOWE — bez tego Docker kopiuje stare project.assets.json
+# z windowsowymi ścieżkami, co powoduje błąd NuGetPackages.
+
+# Build artifacts
+**/obj/
+**/bin/
+
+# Visual Studio
+**/.vs/
+**/*.user
+
+# SQLite i uploady (nie potrzebne do budowania)
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.sqbpro
+**/uploads/
+
+# Node
+**/node_modules/
+
+# Git
+**/.git/
+**/.gitignore
+
+# Logi
+**/*.log

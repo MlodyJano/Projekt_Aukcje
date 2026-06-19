@@ -1,10 +1,10 @@
-# 🏷️ System Aukcyjny — Projekt_Aukcje
+# System Aukcyjny — Projekt_Aukcje
 
 Pełnostackowa aplikacja aukcyjna zbudowana w **ASP.NET Core 10** (backend) i **Angular** (frontend). Umożliwia rejestrację użytkowników, wystawianie aukcji, licytowanie i zarządzanie własnym kontem.
 
 ---
 
-## 📋 Spis treści
+## Spis treści
 
 - [Wymagania wstępne](#wymagania-wstępne)
 - [Szybki start (Docker)](#szybki-start-docker)
@@ -110,6 +110,13 @@ Dostępne są również dwie przykładowe aukcje (Smartfon testowy, Książka pr
 
 ---
 
+## Diagram bazy danych (ERD)
+
+Struktura relacyjna trwałego przechowywania danych systemu aukcyjnego (SQLite), obrazująca powiązania między encjami User, Auction oraz Bid.
+
+![Diagram ERD bazy danych](erd.png)
+
+
 ## Dokumentacja API
 
 Bazowy URL: `http://localhost:8080` (Docker) lub `http://localhost:5000` (lokalne).
@@ -176,8 +183,6 @@ Zwraca wszystkich zarejestrowanych użytkowników.
 
 **Odpowiedź 200:** `UserDto` — klient przechowuje `id` do kolejnych żądań
 **Odpowiedź 401:** `{ "message": "Nieprawidłowy login lub hasło." }`
-
-> ⚠️ API nie używa JWT. Tożsamość użytkownika jest przekazywana jako `ownerId`/`bidderId` w ciele żądań.
 
 ---
 
@@ -392,7 +397,7 @@ Testy pokrywają:
 
 ---
 
-## 🗂️ Struktura projektu
+## Struktura projektu
 
 ```
 Projekt_Aukcje/
@@ -415,7 +420,7 @@ Projekt_Aukcje/
 
 ---
 
-## 🔧 Technologie
+## Technologie
 
 | Warstwa  | Technologia                          |
 |----------|--------------------------------------|

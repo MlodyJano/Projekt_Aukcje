@@ -60,7 +60,7 @@ export class AuctionDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.auction = data;
-          this.bidAmount = data.currentPrice + 100;
+          this.bidAmount = data.currentPrice + 1;
           this.isLoading = false;
           this.cdr.detectChanges();
         },
